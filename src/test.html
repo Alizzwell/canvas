@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app="myApp" class="ng-scope">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=11">
+
+		<link rel="stylesheet" href="./stylesheets/bootstrap.min.css">
+		<link rel="stylesheet" href="./stylesheets/codemirror.css">
+		<link rel="stylesheet" href="./stylesheets/style.css">
+    <link href="./test.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="./stylesheets/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="./stylesheets/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="./stylesheets/demo.css" />
+		<link rel="stylesheet" type="text/css" href="./stylesheets/drag.css" />
+		<link rel="stylesheet" type="text/css" href="./stylesheets/collapseexpand.css" />
+		
+		<script src="./javascripts/jquery-2.2.4.min.js"></script>
+		<script src="./javascripts/angular.min.js"></script>
+		<script src="./javascripts/bootstrap.min.js"></script>
+		<script src="./javascripts/jquery.slidereveal.min.js"></script>
+
+		<script src="./javascripts/codemirror/codemirror.js"></script>
+		<script src="./javascripts/codemirror/mode/scheme.js"></script>
+		<script src="./javascripts/codemirror/mode/javascript.js"></script>
+		<script src="./javascripts/codemirror/mode/xml.js"></script>
+		<script src="./javascripts/codemirror/mode/clike.js"></script>
+		<script src="./javascripts/codemirror/addon/closebrackets.js"></script>
+		<script src="./javascripts/codemirror/addon/active-line.js"></script>
+		<script src="./javascripts/codemirror/addon/searchcursor.js"></script>
+		<script src="./javascripts/codemirror/addon/mark-selection.js"></script>
+		<script src="./javascripts/codemirror/addon/autorefresh.js"></script>
+    <script src="./test.js"></script>
+    <script src="./resize.js"></script>
+  </head>
+
+  <body ng-controller="MainCtrl">
+  	<div id="content" style="overflow: auto;" ng-mousemove="ContentMove($event)" >
+			<div ng-repeat="k in arr">
+				<div id="resizable{{k}}" class="resizable" ng-mousemove="ResizableMove($event)" ng-mouseenter="ResizableEnter($event)" ng-mouseleave="ResizableLeave($event)" ng-mousedown="ResizableDown($event)" ng-mouseup="ResizableUp($event)" my-canvas>
+					<div id="canvas{{k}}" class="canvas" ng-mousedown="CanvasDown($event)" ng-mouseup="CanvasUp($event)" ng-mouseenter="CanvasEnter($event)" ng-mouseleave="CanvasLeave($event)">
+						<svg id="svg{{k}}"/>
+						<img src="./collapse.png" class="del" ng-click="btnDelClk($event)"/>
+					</div>
+				</div>
+			</div>	
+		</div>
+		
+		
+		<!--label class="btn btn-primary" ng-click="btnNextClk()">Next</label-->
+  		<!--<div id="top-content">
+				<svg id="svg{{k}}" class="canvas" ng-repeat="k in arr" ng-mousemove="SVGMove($event)" ng-mousedown="SVGDown($event)" ng-mouseup="SVGUp($event)" ng-mouseleave="SVGLeave($event)">
+			
+				</svg>
+			</div>-->
+					
+  		<!--<div id="bottom-content">
+				<div>
+					<textarea ng-init="initEdit()" id="Edit" width="10px" height="300px"></textarea>
+				</div>
+				<div align="center" style="margin-top:10px">
+					<label class="btn btn-primary" ng-click="btnNextClk()">Next</label>
+					<label class="btn btn-primary" ng-click="btnStepClk()">Step</label>
+				</div>
+			</div>
+			
+  		<div id="content-resizer" 
+  			resizer="horizontal" 
+  			resizer-height="6" 
+  			resizer-top="#top-content" 
+  			resizer-bottom="#bottom-content"
+				resizer-max="600">
+  		</div>
+			-->
+  	</div>
+  </body>
+
+</html>

@@ -1,0 +1,76 @@
+#content {
+    position: absolute;
+    top: 0px;
+    bottom: 0;
+    left: 0px /* 200 + 6*/;
+    right: 0;
+    overflow: hidden;
+    color: #FFF;
+		background-color: rgba(230, 230, 230, 1);
+}
+#top-content {
+    position: absolute;
+    top: 0;
+    bottom: 206px; /* 130 + 6 */
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    overflow: auto;
+}
+#bottom-content {
+    position: absolute;
+    height: 200px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    background-color: #777;
+}
+
+#content-resizer {
+    position: absolute;
+    height: 6px;
+    bottom: 200px;
+    left: 0;
+    right: 0;
+    background-color: #666;
+    cursor: n-resize;
+}
+
+.resizable {
+	position: absolute;
+	padding: 10px;
+	border: 0px solid black;
+	z-index: 0;
+	background-color: rgba(255, 0, 0, 0.5);
+	height: 300px;
+	width: 600px;
+}
+
+.canvas {
+	border: 0px solid black;
+	z-index: 0;
+	background-color: rgba(0, 0, 255, 0.5);
+	height: 100%;
+	width: 100%;
+}
+
+.canvas:active {
+	background-color: rgba(0, 255, 0, 0.5);
+}
+
+.canvas svg {
+	height: 100%;
+	width: 100%;
+}
+
+.canvas .del {
+	position: absolute; 
+	width: 30px; 
+	height: 30px; 
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+	cursor: pointer;
+}
+
