@@ -33,12 +33,12 @@
   </head>
 
   <body ng-controller="MainCtrl">
-  	<div id="content" style="overflow: auto;" ng-mousemove="ContentMove($event)" >
+  	<div id="content" style="overflow: auto;" ng-mousemove="ContentMove($event)" ng-mouseup="ContentUp($event)" ng-mouseleave="ContentLeave($event)">
 			<div ng-repeat="k in arr">
-				<div id="resizable{{k}}" class="resizable" ng-mousemove="ResizableMove($event)" ng-mouseenter="ResizableEnter($event)" ng-mouseleave="ResizableLeave($event)" ng-mousedown="ResizableDown($event)" ng-mouseup="ResizableUp($event)" my-canvas>
-					<div id="canvas{{k}}" class="canvas" ng-mousedown="CanvasDown($event)" ng-mouseup="CanvasUp($event)" ng-mouseenter="CanvasEnter($event)" ng-mouseleave="CanvasLeave($event)">
+				<div id="resizable{{k}}" class="resizable" ng-mousemove="ResizableMove($event)" ng-mouseenter="ResizableEnter($event)" ng-mouseleave="ResizableLeave($event)" ng-mousedown="ResizableDown($event)" my-canvas>
+					<div id="canvas{{k}}" class="canvas" ng-mousedown="CanvasDown($event)" ng-mouseenter="CanvasEnter($event)" ng-mouseleave="CanvasLeave($event)">
 						<svg id="svg{{k}}"/>
-						<img src="./collapse.png" class="del" ng-click="btnDelClk($event)"/>
+						<img src="./collapse.png" class="del" ng-click="btnDelClk($event)" ng-disabled="selectDisabled"/>
 					</div>
 				</div>
 			</div>	

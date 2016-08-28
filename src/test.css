@@ -45,6 +45,9 @@
 	background-color: rgba(255, 0, 0, 0.5);
 	height: 300px;
 	width: 600px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
 }
 
 .canvas {
@@ -62,6 +65,9 @@
 .canvas svg {
 	height: 100%;
 	width: 100%;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
 }
 
 .canvas .del {
@@ -72,5 +78,8 @@
 	padding: 0px;
 	margin: 0px;
 	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
 }
 

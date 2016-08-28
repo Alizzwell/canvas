@@ -39,79 +39,145 @@ app.controller('MainCtrl', function($scope, $element) {
   }
 	
 	function ContentMove(myE) {
-			if($scope.elem) 
+		var difX = myE.pageX - $scope.prevX;
+		var difY = myE.pageY - $scope.prevY;
+		if($scope.elem) 
+		{
+			$scope.elem.parent().css('left', parseInt($scope.elem.parent().css('left')) + difX);
+			$scope.elem.parent().css('top', parseInt($scope.elem.parent().css('top')) + difY);
+		}
+		else if ($scope.pos >= 0 && $scope.ResizableElem)
+		{
+			var elem = $scope.ResizableElem;
+			var height, width, left, top;
+			switch($scope.pos)
 			{
-				$scope.elem.parent().css('left', parseInt($scope.elem.parent().css('left')) + myE.pageX - $scope.prevX);
-				$scope.elem.parent().css('top', parseInt($scope.elem.parent().css('top')) + myE.pageY - $scope.prevY);
+				case 0:
+					if(parseInt(elem.css('height')) - difY >= 50)
+					{
+						elem.css('height', parseInt(elem.css('height')) - difY);
+						elem.css('top', parseInt(elem.css('top')) + difY);
+					}
+					break;
+				
+				case 1:
+					if(parseInt(elem.css('width')) + difX >= 50)
+					{
+						var btnElem = angular.element(elem.children().children()[1]);
+						elem.css('width', parseInt(elem.css('width')) + difX);
+						btnElem.css('left', parseInt(btnElem.css('left')) + difX);
+					}
+					if(parseInt(elem.css('height')) - difY >= 50)
+					{
+						elem.css('height', parseInt(elem.css('height')) - difY);
+						elem.css('top', parseInt(elem.css('top')) + difY);
+					}
+					break;
+					
+				case 2:
+					if(parseInt(elem.css('width')) + difX >= 50)
+					{
+						var btnElem = angular.element(elem.children().children()[1]);
+						elem.css('width', parseInt(elem.css('width')) + difX);
+						btnElem.css('left', parseInt(btnElem.css('left')) + difX);
+					}
+					break;
+				
+				case 3:
+					if(parseInt(elem.css('width')) + difX >= 50)
+					{
+						var btnElem = angular.element(elem.children().children()[1]);
+						elem.css('width', parseInt(elem.css('width')) + difX);
+						btnElem.css('left', parseInt(btnElem.css('left')) + difX);
+					}
+					if(parseInt(elem.css('height')) + difY >= 50)
+					{
+						elem.css('height', parseInt(elem.css('height')) + difY);
+					}
+					break;
+				
+				case 4:
+					if(parseInt(elem.css('height')) + difY >= 50)
+					{
+						elem.css('height', parseInt(elem.css('height')) + difY);
+					}
+					break;
+				
+				case 5:
+					if(parseInt(elem.css('width')) - difX >= 50)
+					{
+						var btnElem = angular.element(elem.children().children()[1]);
+						elem.css('width', parseInt(elem.css('width')) - difX);
+						elem.css('left', parseInt(elem.css('left')) + difX);
+						btnElem.css('left', parseInt(btnElem.css('left')) - difX);
+					}
+					if(parseInt(elem.css('height')) + difY >= 50)
+					{
+						elem.css('height', parseInt(elem.css('height')) + difY);
+					}
+					break;
+				
+				case 6:
+					if(parseInt(elem.css('width')) - difX >= 50)
+					{
+						var btnElem = angular.element(elem.children().children()[1]);
+						elem.css('width', parseInt(elem.css('width')) - difX);
+						elem.css('left', parseInt(elem.css('left')) + difX);
+						btnElem.css('left', parseInt(btnElem.css('left')) - difX);
+					}
+					break;
+				
+				case 7:
+					if(parseInt(elem.css('width')) - difX >= 50)
+					{
+						var btnElem = angular.element(elem.children().children()[1]);
+						elem.css('width', parseInt(elem.css('width')) - difX);
+						elem.css('left', parseInt(elem.css('left')) + difX);
+						btnElem.css('left', parseInt(btnElem.css('left')) - difX);
+					}
+					if(parseInt(elem.css('height')) - difY >= 50)
+					{
+						elem.css('height', parseInt(elem.css('height')) - difY);
+						elem.css('top', parseInt(elem.css('top')) + difY);
+					}
+					break;
+				
+				default:
+					$scope.ResizableElem.css('cursor', 'default');
+					$scope.ResizableElem = null;
 			}
-			
-			if ($scope.pos >= 0 && $scope.ResizableElem)
-			{
-				var elem = $scope.ResizableElem;
-				switch($scope.pos)
-				{
-					case 0:
-						console.log(elem.css('height'));
-						//elem.css('height', parseInt(elem.css('height')) + myE.pageY - $scope.prevY);
-						break;
-					
-					case 1:
-					
-						break;
-						
-					case 2:
-					
-						break;
-					
-					case 3:
-					
-						break;
-					
-					case 4:
-					
-						break;
-					
-					case 5:
-					
-						break;
-					
-					case 6:
-					
-						break;
-					
-					case 7:
-					
-						break;
-					
-					default:
-						$scope.ResizableElem.css('cursor', 'default');
-						$scope.ResizableElem = null;
-						
-				}
-			}
-			
-			$scope.prevX = JSON.parse(JSON.stringify(myE.pageX));
-			$scope.prevY = JSON.parse(JSON.stringify(myE.pageY));
+		}
+		
+		$scope.prevX = JSON.parse(JSON.stringify(myE.pageX));
+		$scope.prevY = JSON.parse(JSON.stringify(myE.pageY));
+	}
+	
+	function ContentUp (evt) 
+	{
+		if($scope.ResizableElem)
+		{
+			$scope.ResizableElem.css('z-index', ++$scope.curZ);
+		}
+		$scope.elem = null;
+		$scope.ResizableElem = null;
+	}
+	
+	function ContentLeave (evt) 
+	{
+		if($scope.ResizableElem)
+		{
+			$scope.ResizableElem.css('z-index', ++$scope.curZ);
+		}
+		$scope.elem = null;
+		$scope.ResizableElem = null;
 	}
 	
 	function CanvasDown(myE) {
-		if($scope.elem == null)
-		{
-			$scope.elem = angular.element(myE.currentTarget);
-			$scope.elem.css('z-index', 9999);
-			$scope.prevX = JSON.parse(JSON.stringify(myE.pageX));
-			$scope.prevY = JSON.parse(JSON.stringify(myE.pageY));
-		}
-	}
-	
-	function CanvasUp(myE) {
-		if($scope.elem)
-		{
-			$scope.elem.css('z-index', ++$scope.curZ);
-			$scope.elem = null;
-			$scope.prevX = JSON.parse(JSON.stringify(myE.pageX));
-			$scope.prevY = JSON.parse(JSON.stringify(myE.pageY));
-		}
+		$scope.elem = angular.element(myE.currentTarget);
+		$scope.elem.parent().css('z-index', 9999);
+		$scope.prevX = JSON.parse(JSON.stringify(myE.pageX));
+		$scope.prevY = JSON.parse(JSON.stringify(myE.pageY));
+		$scope.ResizeableElem = null;
 	}
 	
 	function CanvasEnter (evt) {
@@ -121,89 +187,85 @@ app.controller('MainCtrl', function($scope, $element) {
 	
 	function CanvasLeave(myE) {
 		$scope.cursorState = 1;
-		if($scope.elem)
-		{
-			$scope.elem.css('z-index', ++$scope.curZ);
-			$scope.elem = null;
-			$scope.prevX = JSON.parse(JSON.stringify(myE.pageX));
-			$scope.prevY = JSON.parse(JSON.stringify(myE.pageY));
-		}
 	}
 	
 	function ResizableMove (evt) {
-		var elem = angular.element(evt.currentTarget);
-		if ($scope.cursorState)
+		if ($scope.ResizableElem == null)
 		{
-			
-			if (evt.offsetY <= parseInt(elem.css('padding-top'))) 
+			var elem = angular.element(evt.currentTarget);
+			if ($scope.cursorState)
 			{
-				if (evt.offsetX <= parseInt(elem.css('padding-left'))) 
+				
+				if (evt.offsetY <= parseInt(elem.css('padding-top'))) 
 				{
-					$scope.pos = 7;
-					elem.css('cursor', 'nw-resize');
-				}
-				else if (evt.offsetX < parseInt(elem.css('width')) - parseInt(elem.css('padding-right')))
+					if (evt.offsetX <= parseInt(elem.css('padding-left'))) 
+					{
+						$scope.pos = 7;
+						elem.css('cursor', 'nw-resize');
+					}
+					else if (evt.offsetX < parseInt(elem.css('width')) - parseInt(elem.css('padding-right')))
+					{
+						$scope.pos = 0;
+						elem.css('cursor', 'n-resize');
+					}
+					else
+					{
+						$scope.pos = 1;
+						elem.css('cursor', 'ne-resize');
+					}
+				}	
+				else if (evt.offsetY < parseInt(elem.css('height')) - parseInt(elem.css('padding-bottom')))
 				{
-					$scope.pos = 0;
-					elem.css('cursor', 'n-resize');
+					if (evt.offsetX <= parseInt(elem.css('padding-left')))
+					{
+						$scope.pos = 6;
+						elem.css('cursor', 'w-resize');
+					}
+					else if (evt.offsetX >= parseInt(elem.css('width')) - parseInt(elem.css('padding-right')))
+					{
+						$scope.pos = 2;
+						elem.css('cursor', 'e-resize');
+					}
+					else
+					{
+						$scope.cursorState = 0;
+						$scope.pos = -1;
+						elem.css('cursor', 'default');
+					}
 				}
 				else
 				{
-					$scope.pos = 1;
-					elem.css('cursor', 'ne-resize');
-				}
-			}	
-			else if (evt.offsetY < parseInt(elem.css('height')) - parseInt(elem.css('padding-bottom')))
-			{
-				if (evt.offsetX <= parseInt(elem.css('padding-left')))
-				{
-					$scope.pos = 6;
-					elem.css('cursor', 'w-resize');
-				}
-				else if (evt.offsetX >= parseInt(elem.css('width')) - parseInt(elem.css('padding-right')))
-				{
-					$scope.pos = 2;
-					elem.css('cursor', 'e-resize');
-				}
-				else
-				{
-					$scope.cursorState = 0;
-					$scope.pos = -1;
-					elem.css('cursor', 'default');
+					if (evt.offsetX <= parseInt(elem.css('padding-left'))) 
+					{
+						$scope.pos = 5;
+						elem.css('cursor', 'sw-resize');
+					}
+					else if (evt.offsetX < parseInt(elem.css('width')) - parseInt(elem.css('padding-right')))
+					{
+						$scope.pos = 4;
+						elem.css('cursor', 's-resize');
+					}
+					else 
+					{
+						$scope.pos = 3;
+						elem.css('cursor', 'se-resize');
+					}
 				}
 			}
 			else
 			{
-				if (evt.offsetX <= parseInt(elem.css('padding-left'))) 
-				{
-					$scope.pos = 5;
-					elem.css('cursor', 'sw-resize');
-				}
-				else if (evt.offsetX < parseInt(elem.css('width')) - parseInt(elem.css('padding-right')))
-				{
-					$scope.pos = 4;
-					elem.css('cursor', 's-resize');
-				}
-				else 
-				{
-					$scope.pos = 3;
-					elem.css('cursor', 'se-resize');
-				}
+				elem.css('cursor', 'default');
 			}
-		}
-		else
-		{
-			elem.css('cursor', 'default');
 		}
 	}
 	
 	function ResizableDown (evt) {
-		if($scope.pos >= 0)
+		if($scope.cursorState && $scope.pos >= 0)
+		{
 			$scope.ResizableElem = angular.element(evt.currentTarget);
-	}
-	
-	function ResizableUp (evt) {
-		$scope.ResizableElem = null;
+			$scope.ResizableElem.css('z-index', 9999);
+			$scope.elem = null;
+		}
 	}
 	
 	function ResizableEnter (evt) {
@@ -220,13 +282,13 @@ app.controller('MainCtrl', function($scope, $element) {
   }
 
 	$scope.ContentMove = ContentMove;
-	$scope.CanvasUp = CanvasUp;
+	$scope.ContentUp = ContentUp;
+	$scope.ContentLeave = ContentLeave;
 	$scope.CanvasDown = CanvasDown;
 	$scope.CanvasEnter = CanvasEnter;
 	$scope.CanvasLeave = CanvasLeave;
 	$scope.ResizableMove = ResizableMove;
 	$scope.ResizableDown = ResizableDown;
-	$scope.ResizableUp = ResizableUp;
 	$scope.ResizableEnter = ResizableEnter;
 	$scope.ResizableLeave = ResizableLeave;
 	$scope.initEdit = initEdit;
