@@ -158,6 +158,11 @@ app.controller('MainCtrl', function($scope, $element) {
 		{
 			$scope.ResizableElem.css('z-index', ++$scope.curZ);
 		}
+		
+		if($scope.elem)
+		{
+			$scope.elem.parent().css('z-index', ++$scope.curZ);
+		}
 		$scope.elem = null;
 		$scope.ResizableElem = null;
 	}
@@ -278,8 +283,16 @@ app.controller('MainCtrl', function($scope, $element) {
 	}
 	
 	function btnDelClk(Event) {
-    angular.element(Event.currentTarget).parent().parent().remove();
-  }
+		angular.element(Event.currentTarget).parent().parent().remove();
+	}
+  
+	function wheelUp(evt) {
+		console.log(evt);
+	}
+  
+	function wheelDown(evt) {
+		console.log(evt);
+	}
 
 	$scope.ContentMove = ContentMove;
 	$scope.ContentUp = ContentUp;
@@ -293,6 +306,8 @@ app.controller('MainCtrl', function($scope, $element) {
 	$scope.ResizableLeave = ResizableLeave;
 	$scope.initEdit = initEdit;
 	$scope.btnDelClk = btnDelClk;
+	$scope.wheelUp = wheelUp;
+	$scope.wheelDown = wheelDown;
 });
 
 app.directive('myCanvas', function () {
