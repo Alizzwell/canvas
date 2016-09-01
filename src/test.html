@@ -30,22 +30,27 @@
 		<script src="./javascripts/codemirror/addon/autorefresh.js"></script>
     <script src="./test.js"></script>
     <script src="./resize.js"></script>
+		<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?1.29.1"></script>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.geom.js?1.29.1"></script>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.layout.js?1.29.1"></script>
+		<script src="http://d3js.org/d3.js"></script>
+		<script src="http://d3js.org/d3.v2.min.js"></script>
   </head>
 
   <body ng-controller="MainCtrl">
   	<div id="content" style="overflow: auto;" ng-mousemove="ContentMove($event)" ng-mouseup="ContentUp($event)" ng-mouseleave="ContentLeave($event)">
 			<div ng-repeat="k in arr">
-				<div id="resizable{{k}}" class="resizable" ng-mousemove="ResizableMove($event)" ng-mouseenter="ResizableEnter($event)" ng-mouseleave="ResizableLeave($event)" ng-mousedown="ResizableDown($event)" my-canvas>
-					<div id="canvas{{k}}" class="canvas" ng-mousedown="CanvasDown($event)" ng-mouseenter="CanvasEnter($event)" ng-mouseleave="CanvasLeave($event)">
-						<svg id="svg{{k}}"/>
+				<div id="resizable{{k}}" class="resizable" ng-mousemove="ResizableMove($event)" ng-mouseenter="ResizableEnter($event)" ng-mouseleave="ResizableLeave($event)" ng-mousedown="ResizableDown($event)" my-resizable>
+					<div id="canvas{{k}}" class="canvas" ng-mousedown="CanvasDown($event)" ng-mouseenter="CanvasEnter($event)" ng-mouseleave="CanvasLeave($event)" my-canvas>
 						<img src="./collapse.png" class="del" ng-click="btnDelClk($event)" ng-disabled="selectDisabled"/>
+						<!--svg id="svg{{k}}"/-->
 					</div>
 				</div>
-			</div>	
+			</div>
 		</div>
 		
+		<!--script src="./javascripts/d3/graph.js"></script-->
 		
-		<!--label class="btn btn-primary" ng-click="btnNextClk()">Next</label-->
   		<!--<div id="top-content">
 				<svg id="svg{{k}}" class="canvas" ng-repeat="k in arr" ng-mousemove="SVGMove($event)" ng-mousedown="SVGDown($event)" ng-mouseup="SVGUp($event)" ng-mouseleave="SVGLeave($event)">
 			

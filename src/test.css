@@ -40,11 +40,11 @@
 .resizable {
 	position: absolute;
 	padding: 10px;
-	border: 0px solid black;
+	border: 3px solid rgba(0, 255, 0, 0.5);
 	z-index: 0;
-	background-color: rgba(255, 0, 0, 0.5);
 	height: 300px;
 	width: 600px;
+	transform: scale(1.0);
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
@@ -53,13 +53,11 @@
 .canvas {
 	border: 0px solid black;
 	z-index: 0;
-	background-color: rgba(0, 0, 255, 0.5);
 	height: 100%;
 	width: 100%;
 }
 
 .canvas:active {
-	background-color: rgba(0, 255, 0, 0.5);
 }
 
 .canvas svg {
