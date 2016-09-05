@@ -2,7 +2,7 @@ var app = angular.module('myApp', ['mc.resizer']);
 
 app.controller('MainCtrl', function($scope, $element) {
   $scope.content = 'Hello World';
-	$scope.arr = [1, 2, 3];
+	$scope.arr = [1];
 	$scope.curZ = 0;
 	$scope.cursorState = 0;
 	$scope.pos = 0;
