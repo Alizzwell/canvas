@@ -7,19 +7,21 @@ app.controller('MainCtrl', function($scope, $element) {
 	$scope.cursorState = 0;
 	$scope.pos = 0;
 	$scope.ResizableElem = null;
+	$scope.data = {code: "asd\na\nb\nc\nd\ne", breakp: [1, 2, 5]};
+	$scope.curLine = 0;
 
-	function initEdit() {
-    $scope.Edit = CodeMirror.fromTextArea(document.getElementById("Edit"), {
+	function initOutputEdit() {
+    $scope.outputEdit = CodeMirror.fromTextArea(document.getElementById("outputEdit"), {
       indentWithTabs: true,
       mode: $scope.mode,
-      styleActiveLine: true,
-      autoCloseBrackets: true,
       lineNumbers: true,
       lineWrapping: true,
+      styleSelectedText: true,
+      readOnly: true,
       gutters: ["CodeMirror-linenumbers", "breakpoints"]
     });
 
-    $scope.Edit.on("gutterClick", function(cm, n) {
+    $scope.outputEdit.on("gutterClick", function(cm, n) {
       var info = cm.lineInfo(n);
       
       if (!info) {
@@ -28,14 +30,50 @@ app.controller('MainCtrl', function($scope, $element) {
 
       if (info.gutterMarkers) {
         cm.setGutterMarker(n, "breakpoints", null);  
+        var pos = $scope.breakp.indexOf(n + 1);
+        $scope.breakp.remove(pos, pos);
       }
       else {
         var marker = document.createElement("div");
         marker.style.color = "#933";
         marker.innerHTML = "●";
         cm.setGutterMarker(n, "breakpoints", marker);  
+        $scope.breakp.push(n + 1);
       }
     });
+    
+    $scope.outputEdit.setValue($scope.data.code);
+    markLine(0);
+
+    $scope.data.breakp.forEach(function (bp) {
+      var marker = document.createElement("div");
+      marker.style.color = "#933";
+      marker.innerHTML = "●";
+      $scope.outputEdit.setGutterMarker(bp - 1, "breakpoints", marker);
+    });
+  }
+	
+	function btnStepClk() {
+		for (var i = $scope.curLine + 1; i < $scope.outputEdit.lineCount(); i++)
+		{
+			if($scope.outputEdit.lineInfo(i).gutterMarkers)
+			{
+				$scope.curLine = i;
+				markLine($scope.curLine);
+				break;
+			}
+		}
+  }
+
+  function btnNextClk() {
+    markLine(++$scope.curLine);
+  }
+	
+	var markText;
+  function markLine(n) {
+    if (markText) markText.clear();
+    markText = $scope.outputEdit.markText({line: n, ch: 0}, {line: n}, {className: "styled-background"});
+		$scope.outputEdit.setCursor(n);
   }
 	
 	function ContentMove(myE) {
@@ -324,11 +362,14 @@ app.controller('MainCtrl', function($scope, $element) {
 	$scope.ResizableDown = ResizableDown;
 	$scope.ResizableEnter = ResizableEnter;
 	$scope.ResizableLeave = ResizableLeave;
-	$scope.initEdit = initEdit;
+	//$scope.initEdit = initEdit;
 	$scope.btnDelClk = btnDelClk;
 	$scope.btnTestClk = btnTestClk;
 	$scope.wheelUp = wheelUp;
 	$scope.wheelDown = wheelDown;
+  $scope.initOutputEdit = initOutputEdit;
+  $scope.btnStepClk = btnStepClk;
+  $scope.btnNextClk = btnNextClk;
 });
 
 app.directive('myResizable', function () {

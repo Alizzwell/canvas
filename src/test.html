@@ -97,7 +97,7 @@ body {
 					<div ng-repeat="k in arr">
 						<div id="resizable{{k}}" class="resizable" ng-mousemove="ResizableMove($event)" ng-mouseenter="ResizableEnter($event)" ng-mouseleave="ResizableLeave($event)" ng-mousedown="ResizableDown($event)" my-resizable>
 							<div id="canvas{{k}}" class="canvas" ng-mousedown="CanvasDown($event)" ng-mouseenter="CanvasEnter($event)" ng-mouseleave="CanvasLeave($event)" my-canvas>
-								<img src="./collapse.png" class="del" ng-click="btnDelClk($event)" ng-disabled="selectDisabled"/>
+								<!--img src="./collapse.png" class="del" ng-click="btnDelClk($event)" ng-disabled="selectDisabled"/-->
 								<!--svg id="svg{{k}}"/-->
 							</div>
 						</div>
@@ -107,7 +107,7 @@ body {
 					
   		<div id="bottom-content">
 				<div>
-					<textarea ng-init="initEdit()" id="Edit" width="10px" height="300px"></textarea>
+					<textarea ng-init="initOutputEdit()" id="outputEdit" width="10px" height="300px"></textarea>
 				</div>
 				<div align="center" style="margin-top:10px">
 					<label class="btn btn-primary" ng-click="btnNextClk()">Next</label>
