@@ -361,272 +361,234 @@ app.directive('myCanvas', function () {
   return function (scope, element, attrs) {
 		element.ready(function () {
 			if(element.attr('id') == 'canvas1') {
-				var node_number = 0;
-				var link_number = 0;
+				var margin = {top: 40, right: 20, bottom: 30, left: 40},
+						width = parseInt(element.css('width')) - margin.left - margin.right,
+						height = parseInt(element.css('height')) - margin.top - margin.bottom;
 
-				var width = parseInt(element.css("width")),
-						height = parseInt(element.css("height"));
 
-				var radius = 30;
+				var x = d3.scale.ordinal()
+						.rangeRoundBands([0, width], .1);
 
-				var is_directed_array = true;
+				var y = d3.scale.linear()
+						.range([height * 0.95, 0]);
 
-				var	force = d3.layout.force()
-					.charge(-3000)
-					.linkStrength(0.5)
-					.linkDistance(100)
-					.size([width, height])
-					.links([])	
-					.nodes([])
-					.start();
+				var xAxis = d3.svg.axis()
+						.scale(x)
+						.orient("bottom");
 
-					
-				var nodes = [];
-				var links = [];
 
-				var svgContainer = d3.select("#canvas1")
-					.append("svg")
-					.attr("top", "0px")
-					.attr("left", "0px")
-					.attr("width", width)
-					.attr("height", height);
-	
-				var getID = function(val) { 
-					return document.getElementById(val);
-				};
-						
-				function redraw() { 
-					var link;
-					var linktext;
-					
-					link = svgContainer.selectAll('path')
-					.data(links);
-						
-					link
-					.enter()
-					.insert('path', '.node')
-					.attr("class", "link")
-					.attr("id", function(d) { return d.id ; });
-					
-					linktext = svgContainer.selectAll(".linktext")
-					.data(links);
-					
-					linktext
-					.enter()
-					.insert("text")
-					.attr("class", "linktext")
-					.text(function(d) {
-						if(d.link_value != null) { return d.link_value; }
-						else return 0;
-					});
 
-				//		directed_link.enter().insert('path', '.node').attr("class", "link");
-
-					var node;
-					var nodetext;
-					node = svgContainer.selectAll(".node")
-					.data(nodes);
-					
-					node
-					.enter()
-					.insert("circle")
-					.attr("class", "node")
-					.attr("id", function(d) {return d.id;})
-					.attr("r", radius)
-					.call(force.drag)
-
-							
-					nodetext = svgContainer.selectAll(".nodetext")
-					.data(nodes);
-					
-					nodetext
-					.enter()
-					.insert("text")
-					.attr("class", "nodetext")
-					.text(function(d) { return d.node_number; });
-						
-					force
-					.nodes(nodes)
-					.links(links)
-					.on("tick", function() {	
-							link.attr("d", function(d) {
-								var dx = d.target.x - d.source.x,
-									dy = d.target.y - d.source.y,
-									dx = dx * 3, dy = dy * 3,
-									dr = Math.sqrt(dx * dx + dy * dy),
-									theta = Math.atan2(dy, dx) + Math.PI / 26.55,
-									d90 = Math.PI / 2,
-									dtxs = d.target.x - 1.22 * radius * Math.cos(theta),
-									dtys = d.target.y - 1.22 * radius * Math.sin(theta);
-									var val1 = 3.5, val2 = 10.5;
-									return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0 1," + d.target.x + "," + d.target.y + "A" + dr + "," + dr + " 0 0 0," + d.source.x + "," + d.source.y + "M" + dtxs + "," + dtys +  "l" + (val1 * Math.cos(d90 - theta) - val2 * Math.cos(theta)) + "," + (-val1 * Math.sin(d90 - theta) - val2 * Math.sin(theta)) + "L" + (dtxs - val1 * Math.cos(d90 - theta) - val2 * Math.cos(theta)) + "," + (dtys + val1 * Math.sin(d90 - theta) - val2 * Math.sin(theta)) + "z";
-									//return "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y + "M" + dtxs + "," + dtys +  "l" + (3.5 * Math.cos(d90 - theta) - 10 * Math.cos(theta)) + "," + (-3.5 * Math.sin(d90 - theta) - 10 * Math.sin(theta)) + "L" + (dtxs - 3.5 * Math.cos(d90 - theta) - 10 * Math.cos(theta)) + "," + (dtys + 3.5 * Math.sin(d90 - theta) - 10 * Math.sin(theta)) + "z";
-							});
-							linktext.attr("transform", function(d){ 
-								var dx = d.target.x - d.source.x,
-								dy = d.target.y - d.source.y,
-								dx = dx * 3, dy = dy * 3,
-								dr = Math.sqrt(dx * dx + dy * dy),
-								theta = Math.atan2(dy, dx) + Math.PI / 11.95,	
-								d90 = Math.PI / 2,
-								dtxs = d.target.x - 3 * radius * Math.cos(theta),
-								dtys = d.target.y - 3 * radius * Math.sin(theta);
-								return 'translate(' + [dtxs, dtys] + ')' ; 
-							});
-							node.attr("transform", function(d) { return 'translate(' + [d.x , d.y] + ')' ; })
-								.attr("x", function(d) { return d.x })
-								.attr("y", function(d) { return d.y});
-							
-							nodetext.attr("transform", function(d) { return 'translate(' + [d.x, d.y + 10] + ')' ; });
+				var tip = d3.tip()
+						.attr('class', 'd3-tip')
+						.offset([-12, 0])
+						.html(function(d) {
+								return "<span style='color:red'>" + d + "</span>";
 						})
-					.start();	
+
+				var svg = d3.select("#canvas1")
+					.append("svg")
+					.attr("width", width + margin.left + margin.right)
+					.attr("height", height + margin.top + margin.bottom)
+					.append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+				svg.call(tip);
+
+				var data = [];
+				var indexes;
+				var duration = 700;
+
+				// chart init
+				indexes = [];
+				for (var i = 0; i < data.length; i++) {
+					indexes.push(i);
+				}
+
+				x.domain(indexes);
+				y.domain(d3.extent(data));
+
+				svg.append("g")
+						.attr("class", "x axis")
+						.attr("transform", "translate(0," + height + ")")
+						.call(xAxis);
+
+				svg.selectAll(".bar")
+						.data(data)
+					.enter().append("rect")
+						.attr("class", "bar")
+						.attr("x", function(d, i) { return x(i); })
+						.attr("width", x.rangeBand())
+						.attr("y", function(d) { return y(d); })
+						.attr("height", function(d) { return height - y(d); })
+						.on('mouseover', tip.show)
+						.on('mouseout', tip.hide);
+
+				svg.select(".x.axis")
+					.selectAll("text")
+					.style("font-size", function() { return (width / 80) + "px" });
+
+				// new_data가 undefined인 경우, data를 직접 swap하여 사용한다.
+				// new_data가 주어지면 해당 data를 사용한다.
+				function swap(i, j, new_data) {
+					if (i === j) {
+						console.log("i, j are equal");
+						return;
+					}
 					
-					link.exit().remove();
-					linktext.exit().remove();
-					node.exit().remove();
-					nodetext.exit().remove();
-				}
-
-
-
-
-				var makeNode = function(id){
-					if(getID("node_"+id) === null) {
-						node_number = node_number + 1;
-						nodes.push({ id : "node_" + (id), node_number : id});
-						redraw();
-					}
-				}
-
-				var makeEdge = function(source, target, value){
-					var i;
-					var s_node, t_node;
-					
-					for(i = 0; i < node_number; i++) {
-						if(nodes[i].node_number === source) s_node = nodes[i];
-						if(nodes[i].node_number === target) t_node = nodes[i];
+					var data_num = svg.selectAll(".bar")
+						.data().length;
+						
+					if (i >= data_num || j >= data_num || i < 0 || j < 0) {
+						console.log("index is not valid");
+						return;
 					}
 					
+					if (!new_data) {
+						var temp = data[i];
+						data[i] = data[j];
+						data[j] = temp;
+						new_data = data;
+					}
+					else {
+						data = new_data;
+					}
 					
-					var edge = getID("link_" + source + "_" + target);
-					if(edge === null){
-						links.push({ id : "link_" + source + "_" + target, source : s_node, target : t_node, link_value : value, is_directed_array : false });
-						link_number++;
-						redraw();
-					}
-					else{
-						for(i=0;i<link_number;i++){
-							if(links[i].source.node_number === source && links[i].target.node_number === target){
-								links[i].link_value = value;
-								var _links = links;
-								links = [];
-								redraw();
-								links = _links;
-								redraw();
-							}
-						}
-					}
+					var bar = svg.selectAll(".bar");
+					bar.style("fill", function(d, idx) {
+							if (idx == i || idx == j)
+								return "orchid";
+						})
+						.transition()
+						.duration(duration)
+						.attr("x", function(d, idx) { 
+							if (idx == i)
+								return x(j);
+							else if (idx == j)
+								return x(i);
+							else
+								return x(idx);
+						})
+						.call(endall, function() {
+							bar.data(new_data)
+								.attr("x", function(d, idx) { return x(idx); })
+								.attr("y", function(d) { return y(d); })
+								.attr("height", function(d) { return height - y(d); })
+								.style("fill", "orange");
+						});
 				}
-				
-				var removeNode = function(id){
-					var i ;
+
+				function change_canvas_size(w, h) {
+					console.log("canvas size changed. width : " + w + ", height : " + h);
 					
-					for(i = 0; i < node_number; i++){
-						if(nodes[i].node_number === id){
-							nodes.splice(i, 1);
-							break;
-						}
-					}
-					for(i=0;i<link_number; i++){
-						if(links[i].source.node_number === id) { links.splice(i, 1); i--; link_number--; }
-						else if(links[i].target.node_number === id) { links.splice(i, 1); i--; link_number--; } 
-					}
-
-					var _nodes = nodes;
-					var _links = links;
+					width = w - margin.left - margin.right,
+						height = h - margin.top - margin.bottom;
 					
-					nodes = [];
-					links = [];
-					redraw();
-
-					nodes = _nodes;
-					links = _links;
-					redraw();
-					node_number--;
+					x.rangeRoundBands([0, width], .1);
+					y.range([height * 0.95, 0]);
 					
-
-				}
-
-				var removeEdge = function(source, target){
-					var i;
-					for (i = 0; i < link_number; i++){
-						if(links[i].id === "link_" + source + "_" + target){
-							links.splice(i, 1);
-							break;
-						}
-					}
-
-					var _links = links;
-					links = [];
-					redraw();
+					xAxis.scale(x);
 					
-					links = _links;
-					redraw();
-					link_number--;
+					d3.select("div#canvas").select("svg")
+						.attr("width", width + margin.left + margin.right)
+						.attr("height", height + margin.top + margin.bottom);
+						
+					svg.select(".x.axis").remove();
+						
+					svg.append("g")
+						.attr("class", "x axis")
+						.attr("transform", "translate(0," + height + ")")
+						.call(xAxis);
+						
+					svg.select(".x.axis")
+						.selectAll("text")
+						.style("font-size", function() { return (width / 80) + "px" });
+
+					svg.selectAll(".bar")
+						.attr("x", function(d, i) { return x(i); })
+						.attr("width", x.rangeBand())
+						.attr("y", function(d) { return y(d); })
+						.attr("height", function(d) { return height - y(d); });
+				};
+
+				 function endall(transition, callback) { 
+						if (!callback) callback = function(){};
+						if (transition.size() === 0) { callback() }
+						var n = 0; 
+						transition 
+								.each(function() { ++n; }) 
+								.each("end", function() { if (!--n) callback.apply(this); }); 
+				} 
+
+
+				function resize(size) {
+					var temp = [];
+					for (var i = 0; i < size; i++) {
+						temp[i] = data[i];
+						if (!temp[i]) temp[i] = 0;
+					}
+					data = temp;
+					var indexes;
+					var duration = 700;
+
+					// chart init
+					indexes = [];
+					for (var i = 0; i < data.length; i++) {
+						indexes.push(i);
+					}
+
+					x.domain(indexes);
+					y.domain(d3.extent(data));
+
+
+					svg.select(".x.axis").remove();
+						
+					svg.append("g")
+						.attr("class", "x axis")
+						.attr("transform", "translate(0," + height + ")")
+						.call(xAxis);
+
+					svg.select(".x.axis")
+						.selectAll("text")
+						.style("font-size", function() { return (width / 80) + "px" }); 
+
+
+					svg.selectAll(".bar").remove();
+
+					svg.selectAll(".bar")
+						.data(data)
+						.enter().append("rect")
+						.attr("class", "bar")
+						.attr("x", function(d, i) { return x(i); })
+						.attr("width", x.rangeBand())
+						.attr("y", function(d) { return y(d); })
+						.attr("height", function(d) { return height - y(d); })
+						.on('mouseover', tip.show)
+						.on('mouseout', tip.hide);
 				}
 
+				resize(5);
+				function setData(idx, value) {
+					data[idx] = value;
+					y.domain(d3.extent(data));
 
-
-				var highLightNode = function(id){ 
-					var node = d3.select("#node_" + id);
-					if(node != null) { 
-						node.transition().duration(500).style("fill", "red");
-					}
+					var bar = svg.selectAll(".bar");
+					bar.data(data)
+						.transition()
+						.duration(300)
+						.attr("x", function(d, idx) { return x(idx); })
+						.attr("y", function(d) { return y(d); })
+						.attr("height", function(d) { return height - y(d); })
+						.style("fill", "orange");
 				}
 
-				var highLightEdge = function(source, target){
-					var edge = d3.select("#link_" + source +"_"+target);
-					if(edge != null) { 
-						edge.transition().duration(500).style("stroke", "red");
-					}
+				function highlight(idx) {
+					var bar = svg.selectAll(".bar");
+					bar.data(data)
+						.style("fill", function (d, i) {
+							if (i == idx) return 'red';
+							return 'orange';
+						}); 
 				}
-
-				var unHighLightNode = function(id) { 
-					var node = d3.select("#node_" + id);
-					if(node != null) { 
-						node.transition().duration(500).style("fill", "black");
-					}
-				}
-				var unHighLightEdge = function(source, target){
-					var edge = d3.select("#link_" + source +"_"+target);
-					if(edge != null) { 
-						edge.transition().duration(500).style("stroke", "#999");
-					}
-				}
-
-				var unHighLightAll = function(){
-					var i;
-					for(i=0;i<node_number;i++){
-						unHighLightNode(nodes[i].node_number);
-					}
-
-					for(i=0;i<link_number;i++){
-						unHighLightEdge(links[i].source.node_number, links[i].target.node_number);
-					}
-				}
-
-
-				makeNode(1);
-				makeNode(2);
-				makeNode(3);
-				makeNode(4);
-				highLightNode(4);
-				makeEdge(1, 2, '');
-				makeEdge(2, 3, 2);
-				makeEdge(2, 4, 3);
-				makeEdge(4, 2, 4);
-				highLightEdge(3, 4);
-				highLightEdge(2, 4);
 			}
 			
 			if (element.attr('id') == 'canvas2')
