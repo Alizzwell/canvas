@@ -7,8 +7,19 @@ app.controller('MainCtrl', function($scope, $element) {
 	$scope.cursorState = 0;
 	$scope.pos = 0;
 	$scope.ResizableElem = null;
-	$scope.data = {code: "asd\na\nb\nc\nd\ne", breakp: [1, 2, 5]};
-	$scope.curLine = 0;
+	$scope.data = {code: "asd\na\nb\nc\nd\ne\nf\ng\nh", breakp: [1, 2, 5], 
+	info : 
+	[
+		[1, "Line1"], 
+		[3, "Line3"], 
+		[2, "Line2"], 
+		[5, "Line5"], 
+		[4, "Line4"], 
+		[6, "Line6"], 
+		[7, "Line7"]
+	]};
+	
+	$scope.curStep = 0;
 
 	function initOutputEdit() {
     $scope.outputEdit = CodeMirror.fromTextArea(document.getElementById("outputEdit"), {
@@ -66,7 +77,9 @@ app.controller('MainCtrl', function($scope, $element) {
   }
 
   function btnNextClk() {
-    markLine(++$scope.curLine);
+    //markLine(++$scope.curLine);
+		markLine($scope.data.info[$scope.curStep][0]);
+		console.log($scope.data.info[$scope.curStep++]);
   }
 	
 	var markText;
