@@ -1,20 +1,11 @@
-#content {
-    position: absolute;
-    top: 0px;
-    bottom: 0;
-    left: 0px /* 200 + 6*/;
-    right: 0;
-    overflow: hidden;
-    color: #FFF;
-		background-color: rgba(230, 230, 230, 1);
-}
+
 #top-content {
     position: absolute;
     top: 0;
-    bottom: 206px; /* 130 + 6 */
+    bottom: 0; /* 130 + 6 */
     left: 0;
     right: 0;
-    background-color: #fff;
+		background-color: rgba(230, 230, 230, 1);
     overflow: auto;
 }
 #bottom-content {
@@ -25,6 +16,15 @@
     right: 0;
     overflow: auto;
     background-color: #777;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		user-select: none;
+}
+
+#bottom-content .CodeMirror {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		user-select: none;
 }
 
 #content-resizer {
@@ -39,12 +39,9 @@
 
 .resizable {
 	position: absolute;
-	padding: 10px;
-	border: 3px solid rgba(0, 255, 0, 0.5);
 	z-index: 0;
-	height: 500px;
-	width: 1350px;
 	transform: scale(1.0);
+	background-color: rgba(0, 255, 0, 0.5);
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
@@ -55,6 +52,7 @@
 	z-index: 0;
 	height: 100%;
 	width: 100%;
+	background-color: rgba(255, 0, 0, 0.5);
 }
 
 .canvas:active {
@@ -68,7 +66,7 @@
 	user-select: none;
 }
 
-.canvas .del {
+.resizable .del {
 	position: absolute; 
 	width: 30px; 
 	height: 30px; 

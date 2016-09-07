@@ -6,12 +6,10 @@
 		<link rel="stylesheet" href="./stylesheets/bootstrap.min.css">
 		<link rel="stylesheet" href="./stylesheets/codemirror.css">
 		<link rel="stylesheet" href="./stylesheets/style.css">
-    <link href="./test.css" rel="stylesheet" />
+		<link rel="stylesheet" href="./stylesheets/chart.css">
+		<link rel="stylesheet" href="./stylesheets/test.css">
 		
-		<script src="./javascripts/jquery-2.2.4.min.js"></script>
 		<script src="./javascripts/angular.min.js"></script>
-		<script src="./javascripts/jquery.slidereveal.min.js"></script>
-
 		<script src="./javascripts/codemirror/codemirror.js"></script>
 		<script src="./javascripts/codemirror/mode/scheme.js"></script>
 		<script src="./javascripts/codemirror/mode/javascript.js"></script>
@@ -22,96 +20,30 @@
 		<script src="./javascripts/codemirror/addon/searchcursor.js"></script>
 		<script src="./javascripts/codemirror/addon/mark-selection.js"></script>
 		<script src="./javascripts/codemirror/addon/autorefresh.js"></script>
-    <script src="./test.js"></script>
-    <script src="./resize.js"></script>
-		<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?1.29.1"></script>
-    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.geom.js?1.29.1"></script>
-    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.layout.js?1.29.1"></script>
-		<script src="http://d3js.org/d3.js"></script>
-		<script src="http://d3js.org/d3.v2.min.js"></script>
-		
-		<style>
-
-body {
-  font: 15px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.bar {
-  fill: orange;
-}
-
-.bar:hover {
-  fill: orangered ;
-}
-
-.x.axis path {
-  display: none;
-}
-
-.d3-tip {
-  line-height: 1;
-  font-weight: bold;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 2px;
-}
-
-/* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
-}
-
-/* Style northward tooltips differently */
-.d3-tip.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
-}
-</style>
+    <script src="./javascripts/test.js"></script>
+  	<script src="./javascripts/d3.v3.min.js"></script>
+		<script src="./javascripts/d3.tip.v0.6.3.js"></script>
   </head>
 
   <body ng-controller="MainCtrl">
-  	<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-<script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-				
-  		<div id="top-content">
-				<div id="content" style="overflow: auto;" ng-mousemove="ContentMove($event)" ng-mouseup="ContentUp($event)" ng-mouseleave="ContentLeave($event)">
-					<div ng-repeat="k in arr">
-						<div id="resizable{{k}}" class="resizable" ng-mousemove="ResizableMove($event)" ng-mouseenter="ResizableEnter($event)" ng-mouseleave="ResizableLeave($event)" ng-mousedown="ResizableDown($event)" my-resizable>
-							<div id="canvas{{k}}" class="canvas" ng-mousedown="CanvasDown($event)" ng-mouseenter="CanvasEnter($event)" ng-mouseleave="CanvasLeave($event)" my-canvas>
-								<!--img src="./collapse.png" class="del" ng-click="btnDelClk($event)" ng-disabled="selectDisabled"/-->
-								<!--svg id="svg{{k}}"/-->
-							</div>
+  		<div id="top-content" ng-mousemove="ContentMove($event)" ng-mouseup="ContentUp($event)" ng-mouseleave="ContentLeave($event)">
+				<div ng-repeat="k in arr">
+					<div id="resizable{{k}}" class="resizable" ng-mousemove="ResizableMove($event)" ng-mouseenter="ResizableEnter($event)" ng-mouseleave="ResizableLeave($event)" ng-mousedown="ResizableDown($event)" my-resizable>
+						<div id="canvas{{k}}" class="canvas" ng-mousedown="CanvasDown($event)" ng-mouseenter="CanvasEnter($event)" ng-mouseleave="CanvasLeave($event)" my-canvas>
+							<!--svg id="svg{{k}}"/-->
 						</div>
+						<img id="del{{k}}" src="./collapse.png" class="del" ng-click="btnDelClk($event)" ng-disabled="selectDisabled"/>
 					</div>
 				</div>
 			</div>
 					
-  		<div id="bottom-content">
+  		<!--div id="bottom-content">
 				<div>
 					<textarea ng-init="initOutputEdit()" id="outputEdit" width="10px" height="300px"></textarea>
 				</div>
 				<div align="center" style="margin-top:10px">
 					<label class="btn btn-primary" ng-click="btnNextClk()">Next</label>
-					<!--label class="btn btn-primary" ng-click="btnStepClk()">Step</label-->
+					<label class="btn btn-primary" ng-click="btnStepClk()">Step</label>
 				</div>
 			</div>
 			
@@ -121,7 +53,7 @@ body {
   			resizer-top="#top-content" 
   			resizer-bottom="#bottom-content"
 				resizer-max="600">
-  		</div>
+  		</div-->
   	</div>
   </body>
 

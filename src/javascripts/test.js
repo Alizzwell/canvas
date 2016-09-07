@@ -1,26 +1,16 @@
-var app = angular.module('myApp', ['mc.resizer']);
+var app = angular.module('myApp', []);
 
 app.controller('MainCtrl', function($scope, $element) {
   $scope.content = 'Hello World';
-	$scope.arr = [1];
+	$scope.arr = [0, 1, 2];
 	$scope.curZ = 0;
 	$scope.cursorState = 0;
 	$scope.pos = 0;
 	$scope.ResizableElem = null;
-	$scope.data = {code: "asd\na\nb\nc\nd\ne\nf\ng\nh", breakp: [1, 2, 5], 
-	info : 
-	[
-		[1, "Line1"], 
-		[3, "Line3"], 
-		[2, "Line2"], 
-		[5, "Line5"], 
-		[4, "Line4"], 
-		[6, "Line6"], 
-		[7, "Line7"]
-	]};
-	
+	$scope.resizeStyle = [];
+	$scope.btnDelStyle = [];
 	$scope.curStep = 0;
-
+	
 	function initOutputEdit() {
     $scope.outputEdit = CodeMirror.fromTextArea(document.getElementById("outputEdit"), {
       indentWithTabs: true,
@@ -69,8 +59,8 @@ app.controller('MainCtrl', function($scope, $element) {
 		{
 			if($scope.outputEdit.lineInfo(i).gutterMarkers)
 			{
-				$scope.curLine = i;
-				markLine($scope.curLine);
+				$scope.curLine = i - 1;
+				markLine($scope.curLine - 1);
 				break;
 			}
 		}
@@ -78,7 +68,7 @@ app.controller('MainCtrl', function($scope, $element) {
 
   function btnNextClk() {
     //markLine(++$scope.curLine);
-		markLine($scope.data.info[$scope.curStep][0]);
+		markLine($scope.data.info[$scope.curStep][0] - 1);
 		console.log($scope.data.info[$scope.curStep++]);
   }
 	
@@ -95,107 +85,102 @@ app.controller('MainCtrl', function($scope, $element) {
 		
 		if($scope.elem) 
 		{
-			$scope.elem.parent().css('left', parseInt($scope.elem.parent().css('left')) + difX);
-			$scope.elem.parent().css('top', parseInt($scope.elem.parent().css('top')) + difY);
+			angular.element($scope.elem).parent().css("left", parseInt($scope.elem.parent().css('left')) + difX+"px");
+			angular.element($scope.elem).parent().css("top", parseInt($scope.elem.parent().css('top')) + difY+"px");
 		}
 		else if ($scope.pos >= 0 && $scope.ResizableElem)
 		{
-			var elem = $scope.ResizableElem;
+			var elem = angular.element($scope.ResizableElem);
+			var delElem = angular.element($scope.ResizableElem.children()[1]);
 			var height, width, left, top;
 			switch($scope.pos)
 			{
 				case 0:
 					if(parseInt(elem.css('height')) - difY >= 50)
 					{
-						elem.css('height', parseInt(elem.css('height')) - difY);
-						elem.css('top', parseInt(elem.css('top')) + difY);
+						elem.css('height', parseInt(elem.css('height')) - difY + "px");
+						elem.css('top', parseInt(elem.css('top')) + difY + "px");
 					}
 					break;
 				
 				case 1:
 					if(parseInt(elem.css('width')) + difX >= 50)
 					{
-						elem.css('width', parseInt(elem.css('width')) + difX);
-						var btnElem = angular.element(elem.children().children()[0]);
-						btnElem.css('left', parseInt(elem.css('width')) - parseInt(elem.css('padding-right')) - parseInt(btnElem.css('width')));
+						elem.css('width', parseInt(elem.css('width')) + difX + "px");
+						delElem.css('left', parseInt(elem.css('width')) - parseInt(elem.css("padding-right")) - parseInt(delElem.css('width')) + "px");
 					}
 					if(parseInt(elem.css('height')) - difY >= 50)
 					{
-						elem.css('height', parseInt(elem.css('height')) - difY);
-						elem.css('top', parseInt(elem.css('top')) + difY);
+						elem.css('height', parseInt(elem.css('height')) - difY + "px");
+						elem.css('top', parseInt(elem.css('top')) + difY + "px");
 					}
 					break;
 					
 				case 2:
 					if(parseInt(elem.css('width')) + difX >= 50)
 					{
-						elem.css('width', parseInt(elem.css('width')) + difX);
-						var btnElem = angular.element(elem.children().children()[0]);
-						btnElem.css('left', parseInt(elem.css('width')) - parseInt(elem.css('padding-right')) - parseInt(btnElem.css('width')));
+						elem.css('width', parseInt(elem.css('width')) + difX + "px");
+						delElem.css('left', parseInt(elem.css('width')) - parseInt(elem.css("padding-right")) - parseInt(delElem.css('width')) + "px");
 					}
 					break;
 				
 				case 3:
 					if(parseInt(elem.css('width')) + difX >= 50)
 					{
-						elem.css('width', parseInt(elem.css('width')) + difX);
-						var btnElem = angular.element(elem.children().children()[0]);
-						btnElem.css('left', parseInt(elem.css('width')) - parseInt(elem.css('padding-right')) - parseInt(btnElem.css('width')));
+						elem.css('width', parseInt(elem.css('width')) + difX + "px");
+						delElem.css('left', parseInt(elem.css('width')) - parseInt(elem.css("padding-right")) - parseInt(delElem.css('width')) + "px");
 					}
 					if(parseInt(elem.css('height')) + difY >= 50)
 					{
-						elem.css('height', parseInt(elem.css('height')) + difY);
+						elem.css('height', parseInt(elem.css('height')) + difY + "px");
 					}
 					break;
 				
 				case 4:
 					if(parseInt(elem.css('height')) + difY >= 50)
 					{
-						elem.css('height', parseInt(elem.css('height')) + difY);
+						elem.css('height', parseInt(elem.css('height')) + difY + "px");
 					}
 					break;
 				
 				case 5:
 					if(parseInt(elem.css('width')) - difX >= 50)
 					{
-						elem.css('width', parseInt(elem.css('width')) - difX);
-						elem.css('left', parseInt(elem.css('left')) + difX);
-						var btnElem = angular.element(elem.children().children()[0]);
-						btnElem.css('left', parseInt(elem.css('width')) - parseInt(elem.css('padding-right')) - parseInt(btnElem.css('width')));
+						elem.css('width', parseInt(elem.css('width')) - difX + "px");
+						elem.css('left', parseInt(elem.css('left')) + difX + "px");
+						delElem.css('left', parseInt(elem.css('width')) - parseInt(elem.css("padding-right")) - parseInt(delElem.css('width')) + "px");
 					}
 					if(parseInt(elem.css('height')) + difY >= 50)
 					{
-						elem.css('height', parseInt(elem.css('height')) + difY);
+						elem.css('height', parseInt(elem.css('height')) + difY + "px");
 					}
 					break;
 				
 				case 6:
 					if(parseInt(elem.css('width')) - difX >= 50)
 					{
-						elem.css('width', parseInt(elem.css('width')) - difX);
-						elem.css('left', parseInt(elem.css('left')) + difX);
-						var btnElem = angular.element(elem.children().children()[0]);
-						btnElem.css('left', parseInt(elem.css('width')) - parseInt(elem.css('padding-right')) - parseInt(btnElem.css('width')));
+						elem.css('width', parseInt(elem.css('width')) - difX + "px");
+						elem.css('left', parseInt(elem.css('left')) + difX + "px");
+						delElem.css('left', parseInt(elem.css('width')) - parseInt(elem.css("padding-right")) - parseInt(delElem.css('width')) + "px");
 					}
 					break;
 				
 				case 7:
 					if(parseInt(elem.css('width')) - difX >= 50)
 					{
-						elem.css('width', parseInt(elem.css('width')) - difX);
-						elem.css('left', parseInt(elem.css('left')) + difX);
-						var btnElem = angular.element(elem.children().children()[0]);
-						btnElem.css('left', parseInt(elem.css('width')) - parseInt(elem.css('padding-right')) - parseInt(btnElem.css('width')));
+						elem.css('width', parseInt(elem.css('width')) - difX + "px");
+						elem.css('left', parseInt(elem.css('left')) + difX + "px");
+						delElem.css('left', parseInt(elem.css('width')) - parseInt(elem.css("padding-right")) - parseInt(delElem.css('width')) + "px");
 					}
 					if(parseInt(elem.css('height')) - difY >= 50)
 					{
-						elem.css('height', parseInt(elem.css('height')) - difY);
-						elem.css('top', parseInt(elem.css('top')) + difY);
+						elem.css('height', parseInt(elem.css('height')) - difY + "px");
+						elem.css('top', parseInt(elem.css('top')) + difY + "px");
 					}
 					break;
 				
 				default:
-					$scope.ResizableElem.css('cursor', 'default');
+					elem.css('cursor', 'default');
 					$scope.ResizableElem = null;
 			}
 		}
@@ -208,12 +193,12 @@ app.controller('MainCtrl', function($scope, $element) {
 	{
 		if($scope.ResizableElem)
 		{
-			$scope.ResizableElem.css('z-index', ++$scope.curZ);
+			angular.element($scope.ResizableElem).css('z-index', ++$scope.curZ);
 		}
 		
 		if($scope.elem)
 		{
-			$scope.elem.parent().css('z-index', ++$scope.curZ);
+			angular.element($scope.elem.parent()).css('z-index', ++$scope.curZ);
 		}
 		$scope.elem = null;
 		$scope.ResizableElem = null;
@@ -223,12 +208,12 @@ app.controller('MainCtrl', function($scope, $element) {
 	{
 		if($scope.ResizableElem)
 		{
-			$scope.ResizableElem.css('z-index', ++$scope.curZ);
+			angular.element($scope.ResizableElem).css('z-index', ++$scope.curZ);
 		}
 		
 		if($scope.elem)
 		{
-			$scope.elem.parent().css('z-index', ++$scope.curZ);
+			angular.element($scope.elem.parent()).css('z-index', ++$scope.curZ);
 		}
 		
 		$scope.elem = null;
@@ -239,7 +224,7 @@ app.controller('MainCtrl', function($scope, $element) {
 		if(myE.button == 0)
 		{
 			$scope.elem = angular.element(myE.currentTarget);
-			$scope.elem.parent().css('z-index', 9999);
+			angular.element($scope.elem.parent()).css('z-index', 9999);
 			$scope.prevX = JSON.parse(JSON.stringify(myE.pageX));
 			$scope.prevY = JSON.parse(JSON.stringify(myE.pageY));
 			$scope.ResizeableElem = null;
@@ -248,7 +233,7 @@ app.controller('MainCtrl', function($scope, $element) {
 	
 	function CanvasEnter (evt) {
 		$scope.cursorState = 0;
-		angular.element(evt.currentTarget).parent().css('cursor', 'default');
+		angular.element(angular.element(evt.currentTarget).parent()).css('cursor', 'default');
 	}
 	
 	function CanvasLeave(myE) {
@@ -294,6 +279,7 @@ app.controller('MainCtrl', function($scope, $element) {
 					else
 					{
 						$scope.cursorState = 0;
+						//console.log($scope.cursorState);
 						$scope.pos = -1;
 						elem.css('cursor', 'default');
 					}
@@ -335,10 +321,12 @@ app.controller('MainCtrl', function($scope, $element) {
 	
 	function ResizableEnter (evt) {
 		$scope.cursorState = 1;
+		//console.log("ResizableEnter");
 	}
 	
 	function ResizableLeave (evt) {
 		$scope.cursorState = 0;
+		//console.log("ResizableLeave");
 		angular.element(evt.currentTarget).css('cursor', 'default');
 	}
 	
@@ -388,23 +376,25 @@ app.controller('MainCtrl', function($scope, $element) {
 app.directive('myResizable', function () {
   return function (scope, element, attrs) {
 		element.ready(function () {
-			for(var idx = 1; idx <= scope.arr.length; idx++)
+			for(var idx = 0; idx <= scope.arr.length; idx++)
 			{
-				if (element.attr('id') == 'resizable'+idx) {
-					if(idx % 2)
-					{
-						element.css('left', '50px');
-						element.css('top', 400*parseInt(((idx - 1) / 2))+'px');
-					}
+				if (angular.element(element).attr("id") == 'resizable'+idx) {
+					var elem = angular.element(element);
+					var delElem = angular.element(element.children()[1]);
+					elem.css("top", 400*parseInt((idx / 2))+"px");
+					elem.css("width", "600px");
+					elem.css("height", "300px");
+					elem.css("padding", "10px");
+					delElem.css("width", "30px");
+					if(idx % 2 == 0)
+						elem.css("left", "50px");
 					else
-					{
-						element.css('left', '800px');
-						element.css('top', 400*parseInt(((idx - 1) / 2))+'px');
-					}
+						elem.css("left", "800px");
 					
-					var btnElem = angular.element(element.children().children()[0]);
-					btnElem.css('left', parseInt(element.css('width')) - parseInt(btnElem.css('width')) - parseInt(element.css('padding-right')));
-					btnElem.css('top', parseInt(element.css('padding-top')));
+					delElem.css("left", parseInt(elem.css("width")) - parseInt(elem.css("padding-right")) - parseInt(delElem.css("width"))+"px");
+					delElem.css("top", parseInt(elem.css("padding-top")) + "px");
+					scope.minWidth = elem.css("padding-left") + elem.css("padding-right") + delElem.css("width");
+					scope.minHeight = elem.css("padding-top") + elem.css("padding-bottom") + delElem.css("height");
 				}
 			}
     });
@@ -414,10 +404,10 @@ app.directive('myResizable', function () {
 app.directive('myCanvas', function () {
   return function (scope, element, attrs) {
 		element.ready(function () {
-			if(element.attr('id') == 'canvas1') {
+			if(element.attr('id') == 'canvas0') {
 				var margin = {top: 40, right: 20, bottom: 30, left: 40},
-						width = parseInt(element.css('width')) - margin.left - margin.right,
-						height = parseInt(element.css('height')) - margin.top - margin.bottom;
+						width = 580 - margin.left - margin.right,
+						height = 280 - margin.top - margin.bottom;
 
 
 				var x = d3.scale.ordinal()
@@ -439,7 +429,7 @@ app.directive('myCanvas', function () {
 								return "<span style='color:red'>" + d + "</span>";
 						})
 
-				var svg = d3.select("#canvas1")
+				var svg = d3.select("#canvas0")
 					.append("svg")
 					.attr("width", width + margin.left + margin.right)
 					.attr("height", height + margin.top + margin.bottom)
@@ -485,7 +475,7 @@ app.directive('myCanvas', function () {
 				// new_data가 주어지면 해당 data를 사용한다.
 				function swap(i, j, new_data) {
 					if (i === j) {
-						console.log("i, j are equal");
+						//console.log("i, j are equal");
 						return;
 					}
 					
@@ -493,7 +483,7 @@ app.directive('myCanvas', function () {
 						.data().length;
 						
 					if (i >= data_num || j >= data_num || i < 0 || j < 0) {
-						console.log("index is not valid");
+						//console.log("index is not valid");
 						return;
 					}
 					
@@ -645,11 +635,11 @@ app.directive('myCanvas', function () {
 				}
 			}
 			
-			if (element.attr('id') == 'canvas2')
+			if (element.attr('id') == 'canvas1')
 			{
 				var now = d3.time.year.floor(new Date());
  
-				var spacetime = d3.select('#canvas2');
+				var spacetime = d3.select('#canvas1');
 				var width = 960,
 						height = 500,
 						radius = Math.min(width, height);
