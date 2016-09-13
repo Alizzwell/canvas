@@ -29,16 +29,22 @@
   </head>
 
   <body ng-controller="MainCtrl">
-  		<div id="top-content" ng-mousemove="ContentMove($event)" ng-mouseup="ContentUp($event)" ng-mouseleave="ContentLeave($event)">
-				<div ng-repeat="k in arr">
-					<div canvasCtrl></div>
-					<!--div id="resizable{{k}}" class="resizable" ng-mousemove="ResizableMove($event)" ng-mouseenter="ResizableEnter($event)" ng-mouseleave="ResizableLeave($event)" ng-mousedown="ResizableDown($event)" my-resizable>
-						<div id="canvas{{k}}" class="canvas" ng-mousedown="CanvasDown($event)" ng-mouseenter="CanvasEnter($event)" ng-mouseleave="CanvasLeave($event)" my-canvas>
-						</div>
-						<img id="del{{k}}" src="./collapse.png" class="del" ng-click="btnDelClk($event)" ng-disabled="selectDisabled"/>
-					</div-->
+		<div ng-repeat="k in arr">
+			<div id="resizable{{k}}" class="resizable" init-resizable my-resizable>
+				<div id="canvas{{k}}" class="canvas" init-canvas my-draggable>
+				
 				</div>
 			</div>
+		</div>
+  	<!--div id="top-content" ng-mousemove="ContentMove($event)" ng-mouseup="ContentUp($event)" ng-mouseleave="ContentLeave($event)">
+			<div ng-repeat="k in arr">
+				<div id="resizable{{k}}" class="resizable" ng-mousemove="ResizableMove($event)" ng-mouseenter="ResizableEnter($event)" ng-mouseleave="ResizableLeave($event)" ng-mousedown="ResizableDown($event)" my-resizable>
+					<div id="canvas{{k}}" class="canvas" ng-mousedown="CanvasDown($event)" ng-mouseenter="CanvasEnter($event)" ng-mouseleave="CanvasLeave($event)" my-canvas>
+					</div>
+					<img id="del{{k}}" src="./collapse.png" class="del" ng-click="btnDelClk($event)" ng-disabled="selectDisabled"/>
+				</div>
+			</div>
+		</div-->
 					
   		<!--div id="bottom-content">
 				<div>
@@ -57,7 +63,6 @@
   			resizer-bottom="#bottom-content"
 				resizer-max="600">
   		</div-->
-  	</div>
   </body>
 
 </html>
