@@ -23,15 +23,18 @@
   	<script src="./javascripts/d3.v3.min.js"></script>
 		<script src="./javascripts/d3.tip.v0.6.3.js"></script>
 		
-    <script src="./javascripts/canvas.controller.js"></script>
     <script src="./javascripts/test.js"></script>
-    <!--script src="./javascripts/code.editor.js"></script-->
+    <script src="./javascripts/draggable.js"></script>
+    <script src="./javascripts/resizable.js"></script>
+		
+    <!--script src="./javascripts/canvas.controller.js"></script>
+    <script src="./javascripts/code.editor.js"></script-->
   </head>
 
   <body ng-controller="MainCtrl">
 		<div ng-repeat="k in arr">
 			<div id="resizable{{k}}" class="resizable" init-resizable my-resizable>
-				<div id="canvas{{k}}" class="canvas" init-canvas my-draggable>
+				<div id="canvas{{k}}" class="canvas" my-draggable>
 				
 				</div>
 			</div>

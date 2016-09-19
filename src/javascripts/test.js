@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['canvas.ctrl']);
+var app = angular.module('myApp', ['draggable', 'resizable']);
 
 app.controller('MainCtrl', function($scope, $element, $document) {
 	$scope.arr = [0, 1, 2];
