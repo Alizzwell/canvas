@@ -26,6 +26,7 @@
     <script src="./javascripts/test.js"></script>
     <script src="./javascripts/draggable.js"></script>
     <script src="./javascripts/resizable.js"></script>
+    <script src="./javascripts/collapse.js"></script>
 		
     <!--script src="./javascripts/canvas.controller.js"></script>
     <script src="./javascripts/code.editor.js"></script-->
@@ -37,6 +38,7 @@
 				<div id="canvas{{k}}" class="canvas" my-draggable>
 				
 				</div>
+				<img id="del{{k}}" src="./collapse.png" class="del" ng-disabled="selectDisabled" my-collapse>
 			</div>
 		</div>
   	<!--div id="top-content" ng-mousemove="ContentMove($event)" ng-mouseup="ContentUp($event)" ng-mouseleave="ContentLeave($event)">

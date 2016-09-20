@@ -66,7 +66,7 @@ app.directive('myResizable', ['$document', function($document) {
 					switch(pos)
 					{
 						case 0:
-							if(parseInt(element.css('height')) - difY >= 50)
+							if(startHeight - difY >= 50)
 							{
 								element.css('height', startHeight - difY + "px");
 								element.css('top', startTop + difY + "px");
@@ -74,12 +74,12 @@ app.directive('myResizable', ['$document', function($document) {
 							break;
 						
 						case 1:
-							if(parseInt(element.css('width')) + difX >= 50)
+							if(startWidth + difX >= 50)
 							{
 								element.css('width', startWidth + difX + "px");
-								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + "px");
+								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + difX + "px");
 							}
-							if(parseInt(element.css('height')) - difY >= 50)
+							if(startHeight - difY >= 50)
 							{
 								element.css('height', startHeight - difY + "px");
 								element.css('top', startTop + difY + "px");
@@ -87,62 +87,62 @@ app.directive('myResizable', ['$document', function($document) {
 							break;
 							
 						case 2:
-							if(parseInt(element.css('width')) + difX >= 50)
+							if(startWidth + difX >= 50)
 							{
 								element.css('width', startWidth + difX + "px");
-								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + "px");
+								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + difX + "px");
 							}
 							break;
 						
 						case 3:
-							if(parseInt(element.css('width')) + difX >= 50)
+							if(startWidth + difX >= 50)
 							{
 								element.css('width', startWidth + difX + "px");
-								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + "px");
+								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + difX + "px");
 							}
-							if(parseInt(element.css('height')) + difY >= 50)
+							if(startHeight + difY >= 50)
 							{
 								element.css('height', startHeight + difY + "px");
 							}
 							break;
 						
 						case 4:
-							if(parseInt(element.css('height')) + difY >= 50)
+							if(startHeight + difY >= 50)
 							{
 								element.css('height', startHeight + difY + "px");
 							}
 							break;
 						
 						case 5:
-							if(parseInt(element.css('width')) - difX >= 50)
+							if(startWidth - difX >= 50)
 							{
 								element.css('width', startWidth - difX + "px");
 								element.css('left', startLeft + difX + "px");
-								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + "px");
+								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) - difX + "px");
 							}
-							if(parseInt(element.css('height')) + difY >= 50)
+							if(startHeight + difY >= 50)
 							{
 								element.css('height', startHeight + difY + "px");
 							}
 							break;
 						
 						case 6:
-							if(parseInt(element.css('width')) - difX >= 50)
+							if(startWidth - difX >= 50)
 							{
 								element.css('width', startWidth - difX + "px");
 								element.css('left',startLeft + difX + "px");
-								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + "px");
+								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) - difX + "px");
 							}
 							break;
 						
 						case 7:
-							if(parseInt(element.css('width')) - difX >= 50)
+							if(startWidth - difX >= 50)
 							{
 								element.css('width', startWidth - difX + "px");
 								element.css('left', startLeft + difX + "px");
-								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + "px");
+								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) - difX + "px");
 							}
-							if(parseInt(element.css('height')) - difY >= 50)
+							if(startHeight - difY >= 50)
 							{
 								element.css('height', startHeight - difY + "px");
 								element.css('top', startTop + difY + "px");
