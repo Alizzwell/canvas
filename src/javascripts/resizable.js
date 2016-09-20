@@ -47,7 +47,11 @@ app.directive('myResizable', ['$document', function($document) {
 					startTop = parseInt(element.css('top'));
 					startLeft = parseInt(element.css('left'));
 					flag = 1;
+					element.off('mousemove', resizeMove);
+					element.off('mouseleave', mouseLeave);
+					element.off('mouseenter', mouseEnter);
 					$document.on('mouseup', mouseup);
+					angular.element(element.parent().parent()).css('cursor', element.css('cursor'));
 				}
       }
 
@@ -150,7 +154,7 @@ app.directive('myResizable', ['$document', function($document) {
 							break;
 						
 						default:
-							element.css('cursor', 'default');
+							//element.css('cursor', 'default');
 							flag = 0;
 					}
 				}
@@ -235,17 +239,18 @@ app.directive('myResizable', ['$document', function($document) {
       }
 
       function mouseup() {
-				if(flag == 1)
-				{
-					element.css('z-index', scope.$parent.curZ++);
-					$document.off('mouseup', mouseup);
-					flag = x = y = 0;
-				}
+				element.css('z-index', scope.$parent.curZ++);
+				$document.off('mouseup', mouseup);
+				element.on('mousemove', resizeMove);
+				element.on('mouseleave', mouseLeave);
+				element.on('mouseenter', mouseEnter);
+				angular.element(element.parent().parent()).css('cursor', 'default');
+				flag = x = y = 0;
       }
 			
 			function mouseLeave() {
 				scope.$parent.cursorState = 0;
-				element.css('cursor', 'default');
+				//element.css('cursor', 'default');
 				element.off('mousemove', resizeMove);
 			}
 			

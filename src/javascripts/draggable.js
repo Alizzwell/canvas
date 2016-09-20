@@ -47,12 +47,12 @@ app.directive('myDraggable', ['$document', function($document) {
 			
 			function mouseLeave() {
 				scope.$parent.cursorState = 1;
-				element.css('cursor', 'e-resize');
+				//element.css('cursor', 'e-resize');
 			}
 			
 			function mouseEnter() {
 				scope.$parent.cursorState = 0;
-				element.css('cursor', 'default');
+				//element.css('cursor', 'default');
 			}
 			
       $document.on('mousemove', mouseMove);
