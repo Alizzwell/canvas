@@ -34,11 +34,10 @@
 
   <body ng-controller="MainCtrl">
 		<div ng-repeat="k in arr">
-			<div id="resizable{{k}}" class="resizable" init-resizable my-resizable>
+			<div id="resizable{{k}}" class="resizable" init-resizable my-resizable my-collapse>
 				<div id="canvas{{k}}" class="canvas" my-draggable>
 				
 				</div>
-				<img id="del{{k}}" src="./collapse.png" class="del" ng-disabled="selectDisabled" my-collapse>
 			</div>
 		</div>
   	<!--div id="top-content" ng-mousemove="ContentMove($event)" ng-mouseup="ContentUp($event)" ng-mouseleave="ContentLeave($event)">

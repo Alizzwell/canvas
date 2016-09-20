@@ -4,10 +4,12 @@ app.directive('myCollapse', ['$document', function($document) {
   return {
     link: function(scope, element, attr) {
 			function delClk(Event) {
-				element.parent().remove();
+				element.remove();
 			}
+			
+			element.prepend('<img id="del{{k}}" src="./collapse.png" class="del" ng-disabled="selectDisabled"/>')
 				
-			element.on('click', delClk);
+			angular.element(element.children()[0]).on('click', delClk);
     }
   };
 }]);

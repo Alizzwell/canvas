@@ -7,7 +7,7 @@ app.directive('initResizable', function () {
 			{
 				if (angular.element(element).attr("id") == 'resizable'+idx) {
 					var elem = angular.element(element);
-					var delElem = angular.element(element.children()[1]);
+					var delElem = angular.element(element.children()[0]);
 					elem.css("top", 400*parseInt((idx / 2))+"px");
 					elem.css("width", "600px");
 					elem.css("height", "300px");
@@ -61,7 +61,7 @@ app.directive('myResizable', ['$document', function($document) {
 						width:  startWidth + x + 'px'
 					});*/
 					//var elem = angular.element($scope.ResizableElem);
-					var delElem = angular.element(element.children()[1]);
+					var delElem = angular.element(element.children()[0]);
 					var height, width, left, top;
 					switch(pos)
 					{
@@ -159,7 +159,7 @@ app.directive('myResizable', ['$document', function($document) {
 			function resizeMove(evt) {
 				if (flag == 0)
 				{
-					if (scope.$parent.cursorState == 1)
+					if (scope.$parent.cursorState == 1 && flag == 0)
 					{
 						if (evt.offsetY <= parseInt(element.css('padding-top'))) 
 						{
@@ -251,12 +251,10 @@ app.directive('myResizable', ['$document', function($document) {
 			
 			function mouseEnter() {
 				scope.$parent.cursorState = 1;
-				//element.css('cursor', 'e-resize');
 				element.on('mousemove', resizeMove);
 			}
 			
 			$document.on('mousemove', mousemove);
-      //element.on('mousedown', resizeMove);
       element.on('mousedown', mouseDown);
 			element.on('mouseleave', mouseLeave);
 			element.on('mouseenter', mouseEnter);
