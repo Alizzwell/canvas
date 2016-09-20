@@ -32,237 +32,201 @@ app.directive('initResizable', function () {
 app.directive('myResizable', ['$document', function($document) {
   return {
     link: function(scope, element, attr) {
-      var startX = 0, startY = 0, startWidth = 0, startHeight = 0, startTop = 0, startLeft = 0, x = 0, y = 0, flag = 0, pos = -1;
-
-      function mouseDown(event) {
-				if(scope.$parent.cursorState == 1)
+      var startX = 0, startY = 0, startWidth = 0, startHeight = 0, startTop = 0, startLeft = 0, x = 0, y = 0, pos = -1;
+			var left, top, pLeft, pTop, pBottom, pRight, width, height, offsetX, offsetY;
+      function resizeDown(evt) {
+				// Prevent default dragging of selected content
+				element.css('z-index', 9999);
+				if(pos >= 0)
 				{
-					element.css('z-index', 9999);
-					// Prevent default dragging of selected content
-					event.preventDefault();
-					startX = event.pageX - x;
-					startY = event.pageY - y;
+					evt.preventDefault();
+					startX = evt.pageX - x;
+					startY = evt.pageY - y;
 					startWidth = parseInt(element.css('width'));
 					startHeight = parseInt(element.css('height'));
 					startTop = parseInt(element.css('top'));
 					startLeft = parseInt(element.css('left'));
-					flag = 1;
 					element.off('mousemove', resizeMove);
-					element.off('mouseleave', mouseLeave);
-					element.off('mouseenter', mouseEnter);
-					$document.on('mouseup', mouseup);
+					$document.on('mousemove', mouseMove);
+					$document.on('mouseup', resizeUp);
 					angular.element(element.parent().parent()).css('cursor', element.css('cursor'));
 				}
       }
 
-      function mousemove(evt) {
-				if(flag == 1 && pos >= 0)
+      function mouseMove(evt) {
+				var difY = evt.pageY - startY;
+				var difX = evt.pageX - startX;
+				var delElem = angular.element(element.children()[0]);
+				var height, width, left, top;
+				switch(pos)
 				{
-					var difY = evt.pageY - startY;
-					var difX = evt.pageX - startX;
-					/*element.css({
-						height: startHeight + y + 'px',
-						width:  startWidth + x + 'px'
-					});*/
-					//var elem = angular.element($scope.ResizableElem);
-					var delElem = angular.element(element.children()[0]);
-					var height, width, left, top;
-					switch(pos)
-					{
-						case 0:
-							if(startHeight - difY >= 50)
-							{
-								element.css('height', startHeight - difY + "px");
-								element.css('top', startTop + difY + "px");
-							}
-							break;
+					case 0:
+						if(startHeight - difY >= 50)
+						{
+							element.css('height', startHeight - difY + "px");
+							element.css('top', startTop + difY + "px");
+						}
+						break;
+					
+					case 1:
+						if(startWidth + difX >= 50)
+						{
+							element.css('width', startWidth + difX + "px");
+							delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + difX + "px");
+						}
+						if(startHeight - difY >= 50)
+						{
+							element.css('height', startHeight - difY + "px");
+							element.css('top', startTop + difY + "px");
+						}
+						break;
 						
-						case 1:
-							if(startWidth + difX >= 50)
-							{
-								element.css('width', startWidth + difX + "px");
-								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + difX + "px");
-							}
-							if(startHeight - difY >= 50)
-							{
-								element.css('height', startHeight - difY + "px");
-								element.css('top', startTop + difY + "px");
-							}
-							break;
-							
-						case 2:
-							if(startWidth + difX >= 50)
-							{
-								element.css('width', startWidth + difX + "px");
-								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + difX + "px");
-							}
-							break;
-						
-						case 3:
-							if(startWidth + difX >= 50)
-							{
-								element.css('width', startWidth + difX + "px");
-								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + difX + "px");
-							}
-							if(startHeight + difY >= 50)
-							{
-								element.css('height', startHeight + difY + "px");
-							}
-							break;
-						
-						case 4:
-							if(startHeight + difY >= 50)
-							{
-								element.css('height', startHeight + difY + "px");
-							}
-							break;
-						
-						case 5:
-							if(startWidth - difX >= 50)
-							{
-								element.css('width', startWidth - difX + "px");
-								element.css('left', startLeft + difX + "px");
-								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) - difX + "px");
-							}
-							if(startHeight + difY >= 50)
-							{
-								element.css('height', startHeight + difY + "px");
-							}
-							break;
-						
-						case 6:
-							if(startWidth - difX >= 50)
-							{
-								element.css('width', startWidth - difX + "px");
-								element.css('left',startLeft + difX + "px");
-								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) - difX + "px");
-							}
-							break;
-						
-						case 7:
-							if(startWidth - difX >= 50)
-							{
-								element.css('width', startWidth - difX + "px");
-								element.css('left', startLeft + difX + "px");
-								delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) - difX + "px");
-							}
-							if(startHeight - difY >= 50)
-							{
-								element.css('height', startHeight - difY + "px");
-								element.css('top', startTop + difY + "px");
-							}
-							break;
-						
-						default:
-							//element.css('cursor', 'default');
-							flag = 0;
-					}
+					case 2:
+						if(startWidth + difX >= 50)
+						{
+							element.css('width', startWidth + difX + "px");
+							delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + difX + "px");
+						}
+						break;
+					
+					case 3:
+						if(startWidth + difX >= 50)
+						{
+							element.css('width', startWidth + difX + "px");
+							delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) + difX + "px");
+						}
+						if(startHeight + difY >= 50)
+						{
+							element.css('height', startHeight + difY + "px");
+						}
+						break;
+					
+					case 4:
+						if(startHeight + difY >= 50)
+						{
+							element.css('height', startHeight + difY + "px");
+						}
+						break;
+					
+					case 5:
+						if(startWidth - difX >= 50)
+						{
+							element.css('width', startWidth - difX + "px");
+							element.css('left', startLeft + difX + "px");
+							delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) - difX + "px");
+						}
+						if(startHeight + difY >= 50)
+						{
+							element.css('height', startHeight + difY + "px");
+						}
+						break;
+					
+					case 6:
+						if(startWidth - difX >= 50)
+						{
+							element.css('width', startWidth - difX + "px");
+							element.css('left',startLeft + difX + "px");
+							delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) - difX + "px");
+						}
+						break;
+					
+					case 7:
+						if(startWidth - difX >= 50)
+						{
+							element.css('width', startWidth - difX + "px");
+							element.css('left', startLeft + difX + "px");
+							delElem.css('left', startWidth - parseInt(element.css("padding-right")) - parseInt(delElem.css('width')) - difX + "px");
+						}
+						if(startHeight - difY >= 50)
+						{
+							element.css('height', startHeight - difY + "px");
+							element.css('top', startTop + difY + "px");
+						}
+						break;
+					
+					default:
+						break;
 				}
-      }
+			}
 			
 			function resizeMove(evt) {
-				if (flag == 0)
+				top = parseInt(element.css('top'));
+				left = parseInt(element.css('left'));
+				width = parseInt(element.css('width'));
+				height = parseInt(element.css('height'));
+				offsetX = evt.clientX - left;
+				offsetY = evt.clientY - top;
+				pLeft = parseInt(element.css('padding-left'));
+				pRight = parseInt(element.css('padding-right'));
+				pTop = parseInt(element.css('padding-top'));
+				pBottom = parseInt(element.css('padding-bottom'));
+				if (offsetY <= pTop) 
 				{
-					if (scope.$parent.cursorState == 1 && flag == 0)
+					if (offsetX <= pLeft) 
 					{
-						if (evt.offsetY <= parseInt(element.css('padding-top'))) 
-						{
-							if (evt.offsetX <= parseInt(element.css('padding-left'))) 
-							{
-								pos = 7;
-								element.css('cursor', 'nw-resize');
-							}
-							else if (evt.offsetX < parseInt(element.css('width')) - parseInt(element.css('padding-right')))
-							{
-								pos = 0;
-								element.css('cursor', 'n-resize');
-							}
-							else
-							{
-								pos = 1;
-								element.css('cursor', 'ne-resize');
-							}
-						}	
-						else if (evt.offsetY < parseInt(element.css('height')) - parseInt(element.css('padding-bottom')))
-						{
-							if (evt.offsetX <= parseInt(element.css('padding-left')))
-							{
-								pos = 6;
-								element.css('cursor', 'w-resize');
-							}
-							else if (evt.offsetX >= parseInt(element.css('width')) - parseInt(element.css('padding-right')))
-							{
-								pos = 2;
-								element.css('cursor', 'e-resize');
-							}
-							else
-							{
-								//$scope.cursorState = 0;
-								//console.log($scope.cursorState);
-								pos = -1;
-								element.css('cursor', 'default');
-							}
-						}
-						else
-						{
-							if (evt.offsetX <= parseInt(element.css('padding-left'))) 
-							{
-								pos = 5;
-								element.css('cursor', 'sw-resize');
-							}
-							else if (evt.offsetX < parseInt(element.css('width')) - parseInt(element.css('padding-right')))
-							{
-								pos = 4;
-								element.css('cursor', 's-resize');
-							}
-							else 
-							{
-								pos = 3;
-								element.css('cursor', 'se-resize');
-							}
-						}
+						pos = 7;
+						element.css('cursor', 'nw-resize');
+					}
+					else if (offsetX < width - pRight)
+					{
+						pos = 0;
+						element.css('cursor', 'n-resize');
 					}
 					else
 					{
+						pos = 1;
+						element.css('cursor', 'ne-resize');
+					}
+				}	
+				else if (offsetY < height - pBottom)
+				{
+					if (offsetX <= pLeft)
+					{
+					pos = 6;
+						element.css('cursor', 'w-resize');
+					}
+					else if (offsetX >= width - pRight)
+					{
+						pos = 2;
+						element.css('cursor', 'e-resize');
+					}
+					else
+					{
+						pos = -1;
 						element.css('cursor', 'default');
 					}
 				}
-				/*else if(flag == 1)
+				else
 				{
-					y = evt.pageY - startY;
-					x = evt.pageX - startX;
-					element.css({
-						height: startHeight + y + 'px',
-						width:  startWidth + x + 'px'
-					});
-				}*/
-      }
+					if (offsetX <= pLeft) 
+					{
+						pos = 5;
+						element.css('cursor', 'sw-resize');
+					}
+					else if (offsetX < width - pRight)
+					{
+						pos = 4;
+						element.css('cursor', 's-resize');
+					}
+					else 
+					{
+						pos = 3;
+						element.css('cursor', 'se-resize');
+					}
+				}
+			}
 
-      function mouseup() {
+			function resizeUp() {
 				element.css('z-index', scope.$parent.curZ++);
-				$document.off('mouseup', mouseup);
 				element.on('mousemove', resizeMove);
-				element.on('mouseleave', mouseLeave);
-				element.on('mouseenter', mouseEnter);
+				$document.off('mousemove', mouseMove);
+				$document.off('mouseup', resizeUp);
 				angular.element(element.parent().parent()).css('cursor', 'default');
-				flag = x = y = 0;
+				x = y = 0;
       }
 			
-			function mouseLeave() {
-				scope.$parent.cursorState = 0;
-				//element.css('cursor', 'default');
-				element.off('mousemove', resizeMove);
-			}
-			
-			function mouseEnter() {
-				scope.$parent.cursorState = 1;
-				element.on('mousemove', resizeMove);
-			}
-			
-			$document.on('mousemove', mousemove);
-      element.on('mousedown', mouseDown);
-			element.on('mouseleave', mouseLeave);
-			element.on('mouseenter', mouseEnter);
+      element.on('mousedown', resizeDown);
+      element.on('mousemove', resizeMove);
     }
   };
 }]);
