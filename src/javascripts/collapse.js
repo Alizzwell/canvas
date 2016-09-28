@@ -7,7 +7,7 @@ app.directive('myCollapse', function() {
 				angular.element(element.parent()).remove();
 			}
 			
-			element.prepend("<img src='./collapse.png' class='del' ng-disabled='selectDisabled'/>")
+			element.prepend("<img src='./img/collapse.png' class='del' ng-disabled='selectDisabled'/>")
 				
 			angular.element(element.children()[0]).on('click', delClk);
 		});

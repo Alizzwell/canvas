@@ -60,6 +60,7 @@ app.directive('myResizable', ['$document', function($document) {
 				}
 				
 				scope.$parent.arr[idx].isSelect = 1;
+				scope.$apply();
       }
 
       function mouseMove(evt) {

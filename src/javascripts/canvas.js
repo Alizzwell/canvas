@@ -9,11 +9,4 @@ app.controller('MainCtrl', function($scope, $element, $document) {
 	$scope.cursorState = 0;
 	$scope.curZ = 1;
 	$scope.pos = 0;
-	
-	function mainClick()
-	{
-		
-	}
-	
-	$scope.mainClick = mainClick;
 });
