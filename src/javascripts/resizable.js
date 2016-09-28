@@ -7,7 +7,7 @@ app.directive('initResizable', function () {
 			{
 				if (angular.element(element).attr("id") == 'resizable'+idx) {
 					var elem = angular.element(element);
-					var delElem = angular.element(element.children()[0]);
+					var delElem = angular.element(element.children().children()[0]);
 					elem.css("top", 400*parseInt((idx / 2))+"px");
 					elem.css("width", "600px");
 					elem.css("height", "300px");
@@ -51,12 +51,21 @@ app.directive('myResizable', ['$document', function($document) {
 					$document.on('mouseup', resizeUp);
 					angular.element(element.parent().parent()).css('cursor', element.css('cursor'));
 				}
+				
+				var idx = element.attr("id").slice(-1);
+				
+				for(var i = 0; i < scope.arr.length; i++)
+				{
+					scope.$parent.arr[i].isSelect = 0;
+				}
+				
+				scope.$parent.arr[idx].isSelect = 1;
       }
 
       function mouseMove(evt) {
 				var difY = evt.pageY - startY;
 				var difX = evt.pageX - startX;
-				var delElem = angular.element(element.children()[0]);
+				var delElem = angular.element(element.children().children()[0]);
 				var height, width, left, top;
 				switch(pos)
 				{
