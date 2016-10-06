@@ -16,10 +16,7 @@
 
   <body ng-controller="MainCtrl">
 		<div ng-repeat="k in arr">
-			<div id="resizable{{k.index}}" class="resizable" init-resizable my-resizable>
-				<div ng-hide="k.isSelect == 0" my-collapse>
-					<img src='./img/move.png' class='move' ng-disabled='selectDisabled' my-draggable/>
-				</div>
+			<div id="resizable{{k.index}}" class="resizable" init-canvas my-resizable my-draggable my-collapse>
 				<svg id="canvas{{k.index}}" class="canvas">
 				
 				</div>

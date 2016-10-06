@@ -3,13 +3,33 @@ var app = angular.module('collapse', []);
 app.directive('myCollapse', function() {
   return function(scope, element, attr) {
 		element.ready(function () {
-			function delClk(Event) {
-				angular.element(element.parent()).remove();
+			function colClk(evt) {
+				element.remove();
 			}
 			
-			element.prepend("<img src='./img/collapse.png' class='del' ng-disabled='selectDisabled'/>")
+			function mouseDown() {
+				var children = element.children();
+				var colElem = null;
+				for(var idx = 0; idx < children.length; idx++)
+				{
+					if(children[idx].className == "del")
+						colElem = angular.element(children[idx]);
+				}
 				
-			angular.element(element.children()[0]).on('click', delClk);
+				if(colElem == null)
+				{
+					if (scope.$parent.colElem != null)
+						scope.$parent.colElem.remove();
+					element.prepend("<img src='./img/collapse.png' class='del' ng-disabled='selectDisabled'/>")
+					colElem = angular.element(element.children()[0]);
+					scope.$parent.colElem = colElem;
+					//console.log(angular.element(element.children()[0]).parent().parent().children()[0].offsetWidth);
+					colElem.css("width", "30px");
+					colElem.css("left", parseInt(element.css("width")) - parseInt(element.css("padding")) - parseInt(colElem.css("width")) + "px");
+					colElem.on('click', colClk);
+				}
+			}
+			element.on('mousedown', mouseDown);
 		});
   };
 });

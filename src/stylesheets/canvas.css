@@ -38,6 +38,9 @@
 }
 
 .resizable {
+	width: 600px;
+	height: 300px;
+	padding: 10px;
 	position: absolute;
 	z-index: 0;
 	transform: scale(1.0);
@@ -82,8 +85,7 @@
 	user-select: none;
 }
 
-
-.resizable .move {
+.resizable .drag {
 	position: absolute; 
 	width: 30px; 
 	height: 30px; 
