@@ -27,6 +27,7 @@ app.directive('myDraggable', ['$document', function($document) {
 				scope.$parent.dragElem = dragElem;
 				dragElem.on('mousedown', dragDown);
 			}
+			element.css("z-index", scope.$parent.curZ++);
 		}
 		
 		function dragDown(evt) {
@@ -52,6 +53,7 @@ app.directive('myDraggable', ['$document', function($document) {
 			$document.off('mousemove', dragMove);
 			$document.off('mouseup', dragUp);
 			x = y = 0;
+			element.css("z-index", scope.$parent.curZ++);
 		}
 			
     element.on('mousedown', mouseDown);

@@ -27,23 +27,8 @@ app.directive('initCanvas', ['$document', function ($document) {
 						elem.css("left", "50px");
 					else
 						elem.css("left", "800px");
-					
-					elem.on("mousedown", mouseDown);
 				}
 			}
     });
-		
-		function mouseDown()
-		{
-			element.css("z-index", 99999);
-			$document.on("mouseup", mouseUp);
-			
-		}
-		
-		function mouseUp()
-		{
-			element.css("z-index", scope.$parent.curZ++);
-			$document.off("mouseup");
-		}
   };
 }]); 

@@ -38,7 +38,8 @@ app.directive('myResizable', ['$document', function($document) {
 				$document.on('mouseup', resizeUp);
 				angular.element(element.parent().parent()).css('cursor', element.css('cursor'));
 			}
-				
+			
+			element.css("z-index", scope.$parent.curZ++);
 			var idx = element.attr("id").slice(-1);
 				
 			for(var i = 0; i < scope.arr.length; i++)
