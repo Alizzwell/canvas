@@ -1,10 +1,14 @@
 {
-  "name": "thisplay-canvas",
+  "name": "flubber",
+  "version": "1.0.0",
   "description": "",
-  "main": "",
-  "authors": [
-    "baleian <baleian90@gmail.com>"
+  "main": [
+    "src/javascripts/ui.flubber.js",
+    "src/javascripts/resizable.js",
+    "src/javascripts/collapse.js",
+    "src/javascripts/draggable.js"
   ],
+  "authors": [],
   "license": "MIT",
   "homepage": "https://github.com/Alizzwell/thisplay",
   "private": true,
@@ -16,5 +20,6 @@
     "tests"
   ],
   "dependencies": {
+    "angular": "^1.5.8"
   }
 }

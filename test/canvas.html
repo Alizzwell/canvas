@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=11">
+		<link rel="stylesheet" href="../src/stylesheets/flubber.css">
+
+		<script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../src/javascripts/ui.flubber.js"></script>
+    <script src="../src/javascripts/resizable.js"></script>
+    <script src="../src/javascripts/draggable.js"></script>
+    <script src="../src/javascripts/collapse.js"></script>
+    <script src="app.js"></script>
+  </head>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+
+  <body ng-controller="MainCtrl">
+    <div class="flubber resizable" flubber-resizable flubber-draggable flubber-collapse>
+      <svg id="aaa" />
+    </div>
+    <div class="flubber resizable" flubber-resizable flubber-draggable flubber-collapse>
+      <svg id="bbb" />
+    </div>
+    <div class="flubber resizable" flubber-resizable flubber-draggable flubber-collapse>
+      <svg id="ccc" />
+    </div>
+  </body>
+</html>

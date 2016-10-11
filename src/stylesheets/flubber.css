@@ -1,0 +1,60 @@
+
+.flubber.resizable {
+	width: 600px;
+	height: 300px;
+	padding: 10px;
+	position: absolute;
+	z-index: 0;
+	transform: scale(1.0);
+	background-color: rgba(0, 255, 0, 0.5);
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.flubber svg {
+	border: 0px solid black;
+	z-index: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(255, 255, 255, 1.0);
+	cursor: -webkit-grab;
+}
+
+.flubber svg:active {
+	cursor: -webkit-grabbing;
+}
+
+.flubber.resizable .del {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+  background-image: url('../img/collapse.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.flubber.resizable .drag {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+	cursor: move;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+  background-image: url('../img/move.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
