@@ -1,0 +1,45 @@
+.flubber .resize {
+	position: absolute;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.resize#n {
+	cursor: n-resize;
+  background-image: url('../img/resizeN.png');
+}
+
+.resize#ne {
+	cursor: ne-resize;
+  background-image: url('../img/resizeNE.png');
+}
+
+.resize#e {
+	cursor: e-resize;
+  background-image: url('../img/resizeE.png');
+}
+
+.resize#se {
+	cursor: se-resize;
+  background-image: url('../img/resizeSE.png');
+}
+
+.resize#s {
+	cursor: s-resize;
+  background-image: url('../img/resizeS.png');
+}
+
+.resize#sw {
+	cursor: sw-resize;
+  background-image: url('../img/resizeSW.png');
+}
+
+.resize#w {
+	cursor: w-resize;
+  background-image: url('../img/resizeW.png');
+}
+
+.resize#nw {
+	cursor: nw-resize;
+  background-image: url('../img/resizeNW.png');
+}

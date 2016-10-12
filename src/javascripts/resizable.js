@@ -8,6 +8,7 @@
       var startX = 0, startY = 0, startWidth = 0, startHeight = 0, startTop = 0, startLeft = 0, x = 0, y = 0, pos = -1;
   		var colElem = null;
   		var left, top, pLeft, pTop, pBottom, pRight, width, height, offsetX, offsetY;
+			var nElem, neElem, eElem, seElem, sElem, swElem, wElem, nwElem;
 
   		element.css("width", window.getComputedStyle(element[0], null).width);
   		element.css("height", window.getComputedStyle(element[0], null).height);
@@ -17,9 +18,74 @@
   		element.css("padding-right", window.getComputedStyle(element[0], null).paddingRight);
   		element.css("padding-top", window.getComputedStyle(element[0], null).paddingTop);
   		element.css("padding-bottom", window.getComputedStyle(element[0], null).paddingBottom);
+			
+			element.prepend("<div id='n' class='resize' ng-disabled='selectDisabled'/>")
+			nElem = angular.element(element.children()[0]);
+			nElem.css('width', parseInt(element.css('width')) - parseInt(element.css('padding-left')) - parseInt(element.css('padding-right')) + "px");
+			nElem.css('height', element.css('padding-top'));
+			nElem.css('background-size',parseInt(nElem.css('width')) + "px " + parseInt(nElem.css('height')) + "px");
+			nElem.css('left', parseInt(element.css('padding-left')));
+			nElem.css('top', "0px");
 
+			element.prepend("<div id='ne' class='resize' ng-disabled='selectDisabled'/>")
+			neElem = angular.element(element.children()[0]);
+			neElem.css('width', element.css('padding-right'));
+			neElem.css('height', element.css('padding-top'));
+			neElem.css('background-size',parseInt(neElem.css('width')) + "px " + parseInt(neElem.css('height')) + "px");
+			neElem.css('left', parseInt(element.css('width')) - parseInt(neElem.css('width'))+ "px");
+			neElem.css('top', "0px");
+			
+			element.prepend("<div id='e' class='resize' ng-disabled='selectDisabled'/>")
+			eElem = angular.element(element.children()[0]);
+			eElem.css('width', element.css('padding-right'));
+			eElem.css('height', parseInt(element.css('height')) - parseInt(element.css('padding-top')) - parseInt(element.css('padding-bottom')) + "px");
+			eElem.css('background-size',parseInt(eElem.css('width')) + "px " + parseInt(eElem.css('height')) + "px");
+			eElem.css('left', parseInt(element.css('width')) - parseInt(neElem.css('width'))+ "px");
+			eElem.css('top', element.css('padding-top'));
+			
+			element.prepend("<div id='se' class='resize' ng-disabled='selectDisabled'/>")
+			seElem = angular.element(element.children()[0]);
+			seElem.css('width', element.css('padding-right'));
+			seElem.css('height', element.css('padding-bottom'));
+			seElem.css('background-size', parseInt(seElem.css('width')) + "px " + parseInt(seElem.css('height')) + "px");
+			seElem.css('left', parseInt(element.css('width')) - parseInt(seElem.css('width'))+ "px");
+			seElem.css('top', parseInt(element.css('height')) - parseInt(element.css('padding-bottom')) + "px");
+			
+			element.prepend("<div id='s' class='resize' ng-disabled='selectDisabled'/>")
+			sElem = angular.element(element.children()[0]);
+			sElem.css('width', parseInt(element.css('width')) - parseInt(element.css('padding-left')) - parseInt(element.css('padding-right')) + "px");
+			sElem.css('height', element.css('padding-bottom'));
+			sElem.css('background-size' ,parseInt(sElem.css('width')) + "px " + parseInt(sElem.css('height')) + "px");
+			sElem.css('left', element.css('padding-left'));
+			sElem.css('top', parseInt(element.css('height')) - parseInt(element.css('padding-bottom')) + "px");
+			
+			
+			
+			element.prepend("<div id='sw' class='resize' ng-disabled='selectDisabled'/>")
+			swElem = angular.element(element.children()[0]);
+			swElem.css('width', element.css('padding-left'));
+			swElem.css('height', element.css('padding-bottom'));
+			swElem.css('background-size',parseInt(swElem.css('width')) + "px " + parseInt(swElem.css('height')) + "px");
+			swElem.css('left', "0px");
+			swElem.css('top', parseInt(element.css('height')) - parseInt(element.css('padding-bottom')) + "px");
+			
+			element.prepend("<div id='w' class='resize' ng-disabled='selectDisabled'/>")
+			wElem = angular.element(element.children()[0]);
+			wElem.css('width', element.css('padding-left'));
+			wElem.css('height', parseInt(element.css('height')) - parseInt(element.css('padding-top')) - parseInt(element.css('padding-bottom')) + "px");
+			wElem.css('background-size',parseInt(wElem.css('width')) + "px " + parseInt(wElem.css('height')) + "px");
+			wElem.css('left', "0px");
+			wElem.css('top', element.css('padding-top'));
+			
+			element.prepend("<div id='nw' class='resize' ng-disabled='selectDisabled'/>")
+			nwElem = angular.element(element.children()[0]);
+			nwElem.css('width', element.css('padding-left'));
+			nwElem.css('height', element.css('padding-top'));
+			nwElem.css('background-size',parseInt(nwElem.css('width')) + "px " + parseInt(nwElem.css('height')) + "px");
+			nwElem.css('left', "0px");
+			nwElem.css('top', "0px");
+			
       function resizeDown(evt) {
-  		// Prevent default dragging of selected content
   			if(pos >= 0)
   			{
   				evt.preventDefault();
@@ -224,7 +290,6 @@
 
       element.on('mousedown', resizeDown);
       element.on('mousemove', resizeMove);
-    }
-  });
-
+		}
+	});
 })(angular);

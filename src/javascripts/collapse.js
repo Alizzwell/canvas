@@ -24,7 +24,6 @@
   					element.prepend("<div class='del' ng-disabled='selectDisabled'/>")
   					colElem = angular.element(element.children()[0]);
   					scope.$parent.colElem = colElem;
-  					//console.log(angular.element(element.children()[0]).parent().parent().children()[0].offsetWidth);
   					colElem.css("width", "30px");
   					colElem.css("left", parseInt(element.css("width")) - parseInt(element.css("padding")) - parseInt(colElem.css("width")) + "px");
   					colElem.on('click', colClk);
