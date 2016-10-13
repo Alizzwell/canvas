@@ -30,7 +30,7 @@
   					colElem.on('click', colClk);
   				}
   			}
-  			element.on('mousedown', mouseDown);
+  			element.children().on('mousedown', mouseDown);
   		});
     };
   });

@@ -57,7 +57,7 @@
   			element.css("z-index", scope.$parent.curZ++);
   		}
 
-      element.on('mousedown', mouseDown);
+      element.children().on('mousedown', mouseDown);
     }
   });
 })(angular);
