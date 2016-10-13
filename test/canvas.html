@@ -4,18 +4,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=11">
 		<link rel="stylesheet" href="../src/stylesheets/flubber.css">
 		<link rel="stylesheet" href="../src/stylesheets/resizable.css">
-		<link rel="stylesheet" href="../src/stylesheets/chart.css">
 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="../bower_components/angular/angular.min.js"></script>
 		<script src="../bower_components/d3/d3.js"></script>
+		<script src="../bower_components/thisplay/dist/thisplay.js"></script>
     <script src="../src/javascripts/ui.flubber.js"></script>
     <script src="../src/javascripts/resizable.js"></script>
     <script src="../src/javascripts/draggable.js"></script>
     <script src="../src/javascripts/collapse.js"></script>
-    <script src="../src/javascripts/core.js"></script>
-    <script src="../src/javascripts/chart.js"></script>
-    <script src="../src/javascripts/matrix.js"></script>
-    <script src="../src/javascripts/queue.js"></script>
     <script src="app.js"></script>
   </head>
 
@@ -28,26 +25,26 @@
 
   <body ng-controller="MainCtrl">
     <div class="flubber resizable" flubber-resizable flubber-draggable flubber-collapse>
-      <svg id="aaa" />
-    </div>
-    <div class="flubber resizable" flubber-resizable flubber-draggable flubber-collapse>
       <svg id="bbb" />
     </div>
     <div class="flubber resizable" flubber-resizable flubber-draggable flubber-collapse>
       <svg id="ccc" />
     </div>
+		<div class="flubber resizable" flubber-resizable flubber-draggable flubber-collapse>
+      <svg id="aaa" />
+    </div>
 		
-		<script>
+		<script>			
 			var chart = new thisplay.Chart('#aaa');
 			var matrix = new thisplay.Matrix('#bbb');
 			var queue = new thisplay.Queue('#ccc');
 			chart.init(5);
 			matrix.init(5,5);
-			queue.Push(1);
-			queue.Push(2);
-			queue.Push(3);
-			queue.Push(4);
-			queue.Push(5);
+			queue.push(1);
+			queue.push(2);
+			queue.push(3);
+			queue.push(4);
+			queue.push(5);
 			function btnInitClk() {
 				var size = document.getElementById('init_size').value;
 				chart.init(Number(size));

@@ -2,44 +2,45 @@
 	position: absolute;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
 }
 
 .resize#n {
 	cursor: n-resize;
-  background-image: url('../img/resizeN.png');
+  background-image: url('../img/resizeVertical.jpg');
 }
 
 .resize#ne {
 	cursor: ne-resize;
-  background-image: url('../img/resizeNE.png');
+  background-image: url('../img/resizeNE.jpg');
 }
 
 .resize#e {
 	cursor: e-resize;
-  background-image: url('../img/resizeE.png');
+  background-image: url('../img/resizeHorizon.jpg');
 }
 
 .resize#se {
 	cursor: se-resize;
-  background-image: url('../img/resizeSE.png');
+  background-image: url('../img/resizeNW.jpg');
 }
 
 .resize#s {
 	cursor: s-resize;
-  background-image: url('../img/resizeS.png');
+  background-image: url('../img/resizeVertical.jpg');
 }
 
 .resize#sw {
 	cursor: sw-resize;
-  background-image: url('../img/resizeSW.png');
+  background-image: url('../img/resizeNE.jpg');
 }
 
 .resize#w {
 	cursor: w-resize;
-  background-image: url('../img/resizeW.png');
+  background-image: url('../img/resizeHorizon.jpg');
 }
 
 .resize#nw {
 	cursor: nw-resize;
-  background-image: url('../img/resizeNW.png');
+  background-image: url('../img/resizeNW.jpg');
 }

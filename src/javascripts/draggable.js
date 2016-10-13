@@ -11,7 +11,6 @@
   		element.css("top", window.getComputedStyle(element[0], null).top);
 
   		function mouseDown(evt) {
-				console.log("canvas");
 				var children = element.children();
 				var dragElem = null;
 				for(var idx = 0; idx < children.length; idx++)
@@ -22,11 +21,11 @@
 				
 				if(dragElem == null)
 				{
-					if (scope.$parent.dragElem != null)
-						scope.$parent.dragElem.remove();
+					if (flubberCommon.dragElem != null)
+						flubberCommon.dragElem.remove();
 					element.prepend("<div class='drag' ng-disabled='selectDisabled'/>")
 					dragElem = angular.element(element.children()[0]);
-					scope.$parent.dragElem = dragElem;
+					flubberCommon.dragElem = dragElem;
 					dragElem.on('mousedown', dragDown);
 				}
 				element.css("z-index", flubberCommon.curZ++);
@@ -55,7 +54,7 @@
   			$document.off('mousemove', dragMove);
   			$document.off('mouseup', dragUp);
   			x = y = 0;
-  			element.css("z-index", scope.$parent.curZ++);
+  			element.css("z-index", flubberCommon.curZ++);
   		}
 
       element.on('mousedown', mouseDown);

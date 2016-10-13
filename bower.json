@@ -21,6 +21,9 @@
   ],
   "dependencies": {
     "angular": "^1.5.8"
-    "d3": "^4.2.2"
+  },
+  "devDependencies": {
+    "d3": "^4.2.7",
+    "thisplay": "^2.1.4"
   }
 }

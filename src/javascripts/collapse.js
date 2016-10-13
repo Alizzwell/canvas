@@ -1,7 +1,7 @@
 ;(function (angluar) {
   var app = angular.module('ui.flubber');
 
-  app.directive('flubberCollapse', function() {
+  app.directive('flubberCollapse', function(flubberCommon) {
     return function(scope, element, attr) {
   		element.ready(function () {
   			function colClk(evt) {
@@ -19,16 +19,17 @@
 
   				if(colElem == null)
   				{
-  					if (scope.$parent.colElem != null)
-  						scope.$parent.colElem.remove();
+  					if (flubberCommon.collapseElem != null)
+  						flubberCommon.collapseElem.remove();
   					element.prepend("<div class='del' ng-disabled='selectDisabled'/>")
   					colElem = angular.element(element.children()[0]);
-  					scope.$parent.colElem = colElem;
+  					flubberCommon.collapseElem = colElem;
   					colElem.css("width", "30px");
-  					colElem.css("left", parseInt(element.css("width")) - parseInt(element.css("padding")) - parseInt(colElem.css("width")) + "px");
+  					colElem.css("left", parseInt(element.css("width")) - parseInt(element.css("padding")) * 2 - parseInt(colElem.css("width")) + "px");
   					colElem.on('click', colClk);
   				}
   			}
+				
   			element.on('mousedown', mouseDown);
   		});
     };
