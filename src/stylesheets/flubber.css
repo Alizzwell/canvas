@@ -14,19 +14,6 @@
   box-sizing: border-box;
 }
 
-.flubber svg {
-	border: 0px solid black;
-	z-index: 0;
-	height: 100%;
-	width: 100%;
-	background-color: rgba(255, 255, 255, 1.0);
-	cursor: -webkit-grab;
-}
-
-.flubber svg:active {
-	cursor: -webkit-grabbing;
-}
-
 .flubber.resizable .del {
 	position: absolute;
 	width: 30px;
