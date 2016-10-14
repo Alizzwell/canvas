@@ -58,3 +58,50 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.flubber .resize {
+	position: absolute;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.flubber .resize#n {
+	cursor: n-resize;
+    background-image: url('../img/resizeVertical.jpg');
+}
+
+.flubber .resize#ne {
+	cursor: ne-resize;
+    background-image: url('../img/resizeNE.jpg');
+}
+
+.flubber .resize#e {
+	cursor: e-resize;
+    background-image: url('../img/resizeHorizon.jpg');
+}
+
+.flubber .resize#se {
+	cursor: se-resize;
+    background-image: url('../img/resizeNW.jpg');
+}
+
+.flubber .resize#s {
+	cursor: s-resize;
+    background-image: url('../img/resizeVertical.jpg');
+}
+
+.flubber .resize#sw {
+	cursor: sw-resize;
+    background-image: url('../img/resizeNE.jpg');
+}
+
+.flubber .resize#w {
+	cursor: w-resize;
+    background-image: url('../img/resizeHorizon.jpg');
+}
+
+.flubber .resize#nw {
+    cursor: nw-resize;
+	background-image: url('../img/resizeNW.jpg');
+}
