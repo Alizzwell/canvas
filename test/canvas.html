@@ -7,8 +7,6 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="../bower_components/angular/angular.min.js"></script>
-		<script src="../bower_components/d3/d3.js"></script>
-		<script src="../bower_components/thisplay/dist/thisplay.js"></script>
     <script src="../src/javascripts/ui.flubber.js"></script>
     <script src="../src/javascripts/resizable.js"></script>
     <script src="../src/javascripts/draggable.js"></script>
@@ -33,52 +31,5 @@
 		<div class="flubber resizable" flubber-resizable flubber-draggable flubber-collapse>
       <svg id="ccc" style="width: 100%; height: 100%;" />
     </div>
-		
-		<script>
-			var chart = new thisplay.Chart('#aaa');
-			var matrix = new thisplay.Matrix('#bbb');
-			var queue = new thisplay.Queue('#ccc');
-			chart.init(5);
-			matrix.init(5,5);
-			queue.push(1);
-			queue.push(2);
-			queue.push(3);
-			queue.push(4);
-			queue.push(5);
-			function btnInitClk() {
-				var size = document.getElementById('init_size').value;
-				chart.init(Number(size));
-			}
-
-			function btnSetDataClk() {
-				var idx = document.getElementById('setData_idx').value;
-				var val = document.getElementById('setData_val').value;
-				chart.setData(Number(idx), Number(val));
-			}
-
-			function btnSwapClk() {
-				var i = document.getElementById('swap_i').value;
-				var j = document.getElementById('swap_j').value;
-				chart.swap(Number(i), Number(j));
-			}
-
-			function btnHighlight() {
-				var idx = document.getElementById('highlight_idx').value;
-				chart.highlight(Number(idx));
-			}
-
-			function btnUnHighlight() {
-				var idx = document.getElementById('unhighlight_idx').value;
-				if (!idx) {
-					chart.unhighlight();
-				} else {
-					chart.unhighlight(Number(idx));
-				}
-			}
-
-			function btnClearClk() {
-				chart.clear();
-			}
-		</script>
   </body>
 </html>
