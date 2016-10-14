@@ -8,6 +8,8 @@
       var startX = 0, startY = 0, startWidth = 0, startHeight = 0, startTop = 0, startLeft = 0, x = 0, y = 0, pos = -1;
   		var colElem = null;
   		var left, top, pLeft, pTop, pBottom, pRight, width, height, offsetX, offsetY;
+			var nElem, neElem, eElem, seElem, sElem, swElem, wElem, nwElem;
+			var defaultSize = "10px";
 
   		element.css("width", window.getComputedStyle(element[0], null).width);
   		element.css("height", window.getComputedStyle(element[0], null).height);
@@ -17,10 +19,172 @@
   		element.css("padding-right", window.getComputedStyle(element[0], null).paddingRight);
   		element.css("padding-top", window.getComputedStyle(element[0], null).paddingTop);
   		element.css("padding-bottom", window.getComputedStyle(element[0], null).paddingBottom);
+  		element.css("border", window.getComputedStyle(element[0], null).border);
+
+			function resizeCreate()
+			{
+				element.prepend("<div id='n' class='resize' ng-disabled='selectDisabled'/>")
+				flubberCommon.resizeElem.n = angular.element(element.children()[0]);
+				flubberCommon.resizeElem.n.on('mousedown', resizeDown);
+
+				element.prepend("<div id='ne' class='resize' ng-disabled='selectDisabled'/>")
+				flubberCommon.resizeElem.ne = angular.element(element.children()[0]);
+				flubberCommon.resizeElem.ne.on('mousedown', resizeDown);
+
+				element.prepend("<div id='e' class='resize' ng-disabled='selectDisabled'/>")
+				flubberCommon.resizeElem.e = angular.element(element.children()[0]);
+				flubberCommon.resizeElem.e.on('mousedown', resizeDown);
+
+				element.prepend("<div id='se' class='resize' ng-disabled='selectDisabled'/>")
+				flubberCommon.resizeElem.se = angular.element(element.children()[0]);
+				flubberCommon.resizeElem.se.on('mousedown', resizeDown);
+
+				element.prepend("<div id='s' class='resize' ng-disabled='selectDisabled'/>")
+				flubberCommon.resizeElem.s = angular.element(element.children()[0]);
+				flubberCommon.resizeElem.s.on('mousedown', resizeDown);
+
+				element.prepend("<div id='sw' class='resize' ng-disabled='selectDisabled'/>")
+				flubberCommon.resizeElem.sw = angular.element(element.children()[0]);
+				flubberCommon.resizeElem.sw.on('mousedown', resizeDown);
+
+				element.prepend("<div id='w' class='resize' ng-disabled='selectDisabled'/>")
+				flubberCommon.resizeElem.w = angular.element(element.children()[0]);
+				flubberCommon.resizeElem.w.on('mousedown', resizeDown);
+
+				element.prepend("<div id='nw' class='resize' ng-disabled='selectDisabled'/>")
+				flubberCommon.resizeElem.nw = angular.element(element.children()[0]);
+				flubberCommon.resizeElem.nw.on('mousedown', resizeDown);
+			}
+
+			function resizeRemove()
+			{
+				flubberCommon.resizeElem.n.remove();
+				flubberCommon.resizeElem.ne.remove();
+				flubberCommon.resizeElem.e.remove();
+				flubberCommon.resizeElem.se.remove();
+				flubberCommon.resizeElem.s.remove();
+				flubberCommon.resizeElem.sw.remove();
+				flubberCommon.resizeElem.w.remove();
+				flubberCommon.resizeElem.nw.remove();
+			}
+
+			function resizeDraw()
+			{
+				var borderSize = parseInt(element.css('border').split(" ")[0]);
+				var resizeSize = parseInt(defaultSize);
+
+				flubberCommon.resizeElem.n.css('width', parseInt(element.css('width')) - (resizeSize + borderSize) + "px");
+				flubberCommon.resizeElem.n.css('height', defaultSize);
+				flubberCommon.resizeElem.n.css('background-size', defaultSize + " " + defaultSize);
+				flubberCommon.resizeElem.n.css('left', (resizeSize - borderSize) / 2 + "px");
+				flubberCommon.resizeElem.n.css('top', -(resizeSize + borderSize) / 2 + "px");
+
+				flubberCommon.resizeElem.ne.css('width', defaultSize);
+				flubberCommon.resizeElem.ne.css('height', defaultSize);
+				flubberCommon.resizeElem.ne.css('background-size', defaultSize + " " + defaultSize);
+				flubberCommon.resizeElem.ne.css('left', parseInt(flubberCommon.resizeElem.n.css('left')) + parseInt(flubberCommon.resizeElem.n.css('width')) + "px");
+				flubberCommon.resizeElem.ne.css('top', flubberCommon.resizeElem.n.css('top'));
+
+				flubberCommon.resizeElem.e.css('width', defaultSize);
+				flubberCommon.resizeElem.e.css('height', parseInt(element.css('height')) - (resizeSize + borderSize) + "px");
+				flubberCommon.resizeElem.e.css('background-size', defaultSize + " " + defaultSize);
+				flubberCommon.resizeElem.e.css('left', flubberCommon.resizeElem.ne.css('left'));
+				flubberCommon.resizeElem.e.css('top', parseInt(flubberCommon.resizeElem.ne.css('top')) + parseInt(flubberCommon.resizeElem.ne.css('height')) + "px");
+
+				flubberCommon.resizeElem.se.css('width', defaultSize);
+				flubberCommon.resizeElem.se.css('height', defaultSize);
+				flubberCommon.resizeElem.se.css('background-size', defaultSize + " " + defaultSize);
+				flubberCommon.resizeElem.se.css('left', flubberCommon.resizeElem.e.css('left'));
+				flubberCommon.resizeElem.se.css('top', parseInt(flubberCommon.resizeElem.e.css('top')) + parseInt(flubberCommon.resizeElem.e.css('height')) + "px");
+
+				flubberCommon.resizeElem.s.css('width', flubberCommon.resizeElem.n.css('width'));
+				flubberCommon.resizeElem.s.css('height', defaultSize);
+				flubberCommon.resizeElem.s.css('background-size' , defaultSize + " " + defaultSize);
+				flubberCommon.resizeElem.s.css('left', parseInt(flubberCommon.resizeElem.se.css('left')) - parseInt(flubberCommon.resizeElem.s.css('width')) + "px");
+				flubberCommon.resizeElem.s.css('top', flubberCommon.resizeElem.se.css('top'));
+
+				flubberCommon.resizeElem.sw.css('width', defaultSize);
+				flubberCommon.resizeElem.sw.css('height', defaultSize);
+				flubberCommon.resizeElem.sw.css('background-size', defaultSize + " " + defaultSize);
+				flubberCommon.resizeElem.sw.css('left', parseInt(flubberCommon.resizeElem.s.css('left')) - parseInt(flubberCommon.resizeElem.sw.css('width')) + "px");
+				flubberCommon.resizeElem.sw.css('top', flubberCommon.resizeElem.s.css('top'));
+
+				flubberCommon.resizeElem.w.css('width', defaultSize);
+				flubberCommon.resizeElem.w.css('height', flubberCommon.resizeElem.e.css('height'));
+				flubberCommon.resizeElem.w.css('background-size', defaultSize + " " + defaultSize);
+				flubberCommon.resizeElem.w.css('left', flubberCommon.resizeElem.sw.css('left'));
+				flubberCommon.resizeElem.w.css('top', parseInt(flubberCommon.resizeElem.sw.css('top')) - parseInt(flubberCommon.resizeElem.w.css('height')) + "px");
+
+				flubberCommon.resizeElem.nw.css('width', defaultSize);
+				flubberCommon.resizeElem.nw.css('height', defaultSize);
+				flubberCommon.resizeElem.nw.css('background-size', defaultSize + " " + defaultSize);
+				flubberCommon.resizeElem.nw.css('left', flubberCommon.resizeElem.w.css('left'));
+				flubberCommon.resizeElem.nw.css('top', flubberCommon.resizeElem.n.css('top'));
+			}
+
+			function flubberDown()
+			{
+  			var children = element.children();
+  			var resizeElem = null;
+  			for(var idx = 0; idx < children.length; idx++)
+  			{
+  				if(children[idx].className == "resize")
+					{
+  					resizeElem = angular.element(children[idx]);
+						break;
+					}
+  			}
+
+  			if(resizeElem == null)
+  			{
+  				if (flubberCommon.resizeElem.n != null)
+  					resizeRemove();
+  				resizeCreate();
+					resizeDraw();
+  			}
+			}
 
       function resizeDown(evt) {
-  		// Prevent default dragging of selected content
-  			if(pos >= 0)
+  			switch(evt.currentTarget.id)
+				{
+					case 'n':
+						pos = 0;
+						break;
+
+					case 'ne':
+						pos = 1;
+						break;
+
+					case 'e':
+						pos = 2;
+						break;
+
+					case 'se':
+						pos = 3;
+						break;
+
+					case 's':
+						pos = 4;
+						break;
+
+					case 'sw':
+						pos = 5;
+						break;
+
+					case 'w':
+						pos = 6;
+						break;
+
+					case 'nw':
+						pos = 7;
+						break;
+
+					default:
+						pos = -1;
+						break;
+				}
+
+				if(pos >= 0)
   			{
   				evt.preventDefault();
   				startX = evt.pageX - x;
@@ -36,14 +200,12 @@
   						colElem = angular.element(element.children()[idx]);
   				}
 
-  				element.off('mousemove', resizeMove);
   				$document.on('mousemove', mouseMove);
   				$document.on('mouseup', resizeUp);
-  				angular.element(element.parent().parent()).css('cursor', element.css('cursor'));
+  				//angular.element(element.parent().parent()).css('cursor', element.css('cursor'));
   			}
 
   			element.css("z-index", flubberCommon.curZ++);
-  			scope.$apply();
       }
 
   		function mouseMove(evt) {
@@ -145,86 +307,19 @@
   				default:
   					break;
   			}
-  		}
 
-  		function resizeMove(evt) {
-  			top = parseInt(element.css('top'));
-  			left = parseInt(element.css('left'));
-  			width = parseInt(element.css('width'));
-  			height = parseInt(element.css('height'));
-  			offsetX = evt.clientX - left;
-  			offsetY = evt.clientY - top;
-  			pLeft = parseInt(element.css('padding-left'));
-  			pRight = parseInt(element.css('padding-right'));
-  			pTop = parseInt(element.css('padding-top'));
-  			pBottom = parseInt(element.css('padding-bottom'));
-  			if (offsetY <= pTop)
-  			{
-  				if (offsetX <= pLeft)
-  				{
-  					pos = 7;
-  					element.css('cursor', 'nw-resize');
-  				}
-  				else if (offsetX < width - pRight)
-  				{
-  					pos = 0;
-  					element.css('cursor', 'n-resize');
-  				}
-  				else
-  				{
-  					pos = 1;
-  					element.css('cursor', 'ne-resize');
-  				}
-  			}
-  			else if (offsetY < height - pBottom)
-  			{
-  				if (offsetX <= pLeft)
-  				{
-  				pos = 6;
-  					element.css('cursor', 'w-resize');
-  				}
-  				else if (offsetX >= width - pRight)
-  				{
-  					pos = 2;
-  					element.css('cursor', 'e-resize');
-  				}
-  				else
-  				{
-  					pos = -1;
-  					element.css('cursor', 'default');
-  				}
-  			}
-  			else
-  			{
-  				if (offsetX <= pLeft)
-  				{
-  					pos = 5;
-  					element.css('cursor', 'sw-resize');
-  				}
-  				else if (offsetX < width - pRight)
-  				{
-  					pos = 4;
-  					element.css('cursor', 's-resize');
-  				}
-  				else
-  				{
-  					pos = 3;
-  					element.css('cursor', 'se-resize');
-  				}
-  			}
+				resizeDraw();
   		}
 
   		function resizeUp() {
-  			element.on('mousemove', resizeMove);
   			$document.off('mousemove', mouseMove);
   			$document.off('mouseup', resizeUp);
-  			angular.element(element.parent().parent()).css('cursor', 'default');
+  			//angular.element(element.parent().parent()).css('cursor', 'default');
   			x = y = 0;
       }
 
-      element.on('mousedown', resizeDown);
-      element.on('mousemove', resizeMove);
-    }
-  });
-
+			element.on('mousedown', flubberDown);
+      element.children().on('mousedown', flubberDown);
+		}
+	});
 })(angular);

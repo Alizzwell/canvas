@@ -1,6 +1,6 @@
 {
   "name": "flubber",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
   "main": [
     "src/javascripts/ui.flubber.js",
@@ -21,5 +21,9 @@
   ],
   "dependencies": {
     "angular": "^1.5.8"
+  },
+  "devDependencies": {
+    "d3": "^4.2.7",
+    "thisplay": "^2.1.4"
   }
 }
